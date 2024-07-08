@@ -1,8 +1,11 @@
+import React from "react";
+import Router from "./Router";
+
 function App() {
     return (
-        <>
-            <h1>리액트 초기세팅</h1>
-        </>
+        <React.Fragment>
+            <Router />
+        </React.Fragment>
     );
 }
 
