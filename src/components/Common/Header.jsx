@@ -1,13 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { Ic24 } from "../../assets/png/icon";
+import { Ic24 } from "../../assets/svg/icon";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+    const navigate = useNavigate();
+
+    const handleClickLogoButton = () => {
+        navigate("/");
+    };
+
     return (
         <HeaderWrapper>
             <HeaderBodyWrapper>
-                <HeaderTitle>검수</HeaderTitle>
-                <Icon src={Ic24} alt="icon" />
+                <HeaderLogoButton onClick={handleClickLogoButton}>
+                    <HeaderTitle>신검</HeaderTitle>
+                    <StyledIc24 />
+                </HeaderLogoButton>
             </HeaderBodyWrapper>
         </HeaderWrapper>
     );
@@ -28,13 +37,20 @@ const HeaderBodyWrapper = styled.div`
     height: 7rem;
 `;
 
+const HeaderLogoButton = styled.button`
+    display: flex;
+    align-items: center;
+
+    gap: 0.7rem;
+`;
+
 const HeaderTitle = styled.div`
     padding-left: 1rem;
 
-    font-size: 2.75rem;
+    font-size: 4rem;
 `;
 
-const Icon = styled.img`
+const StyledIc24 = styled(Ic24)`
     width: 4rem;
     height: 4rem;
 `;
