@@ -71,13 +71,16 @@ const LeftDropDown = styled.div`
     background-color: #bcbcbc;
 `;
 
-const ButtonWrapper = styled.button`
+const ButtonWrapper = styled.div`
     width: 100%;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 5rem;
 `;
 const FindButton = styled.button`
-    width: 90%;
+    width: 100%;
     height: 6rem;
 
     font-weight: 600;
@@ -91,7 +94,6 @@ const FindButton = styled.button`
 `;
 
 const LoginBox = styled.button`
-    width: 50%;
     height: 2rem;
 
     color: rgb(158, 158, 158);
