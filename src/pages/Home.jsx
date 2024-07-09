@@ -9,6 +9,10 @@ function Home() {
     const handleClickFindButton = () => {
         navigate("/expert-list");
     };
+
+    const handleClickLoginButton = () => {
+        navigate("/login");
+    };
     return (
         <HomePageWrapper>
             <Header />
@@ -28,7 +32,7 @@ function Home() {
             </BoxWrapper>
             <ButtonWrapper>
                 <FindButton onClick={handleClickFindButton}>찾기</FindButton>
-                <LoginBox>로그인/회원가입</LoginBox>
+                <LoginBox onClick={handleClickLoginButton}>로그인/회원가입</LoginBox>
             </ButtonWrapper>
         </HomePageWrapper>
     );
