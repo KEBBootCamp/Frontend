@@ -16,16 +16,21 @@ function Header() {
 export default Header;
 
 const HeaderWrapper = styled.div`
-    min-width: 43rem;
     width: 100%;
+
+    /* border: 1px solid; */
 `;
 
 const HeaderBodyWrapper = styled.div`
     display: flex;
     align-items: center;
+
+    height: 7rem;
 `;
 
 const HeaderTitle = styled.div`
+    padding-left: 1rem;
+
     font-size: 2.75rem;
 `;
 
