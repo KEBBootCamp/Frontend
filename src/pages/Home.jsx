@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Common/Header";
 
 function Home() {
+    const navigate = useNavigate();
+
+    const handleClickFindButton = () => {
+        navigate("/expert-list");
+    };
     return (
         <HomePageWrapper>
             <Header />
@@ -21,7 +27,7 @@ function Home() {
                 </DropDownWrapper>
             </BoxWrapper>
             <ButtonWrapper>
-                <FindButton>찾기</FindButton>
+                <FindButton onClick={handleClickFindButton}>찾기</FindButton>
                 <LoginBox>로그인/회원가입</LoginBox>
             </ButtonWrapper>
         </HomePageWrapper>
@@ -45,8 +51,8 @@ const DropDownWrapper = styled.div`
     width: 100%;
     height: 10rem;
 
-    font-size: 1.5rem;
-    background-color: #bcbcbc;
+    font-size: 2rem;
+    background-color: rgb(245, 245, 247);
 `;
 
 const LeftDropDown = styled.div`
@@ -58,8 +64,9 @@ const LeftDropDown = styled.div`
     align-items: center;
     justify-content: center;
 
-    background-color: lightgray;
+    background-color: #bcbcbc;
 `;
+
 const ButtonWrapper = styled.button`
     width: 100%;
 
@@ -69,11 +76,13 @@ const FindButton = styled.button`
     width: 90%;
     height: 6rem;
 
-    font-size: 1.5rem;
+    font-weight: 600;
+    font-size: 1.8rem;
 
-    border-radius: 5px;
+    border-radius: 1rem;
     background-color: #4784ff;
     color: white;
+
     cursor: pointer;
 `;
 
@@ -81,6 +90,9 @@ const LoginBox = styled.button`
     width: 50%;
     height: 2rem;
 
-    color: #7a7a7a;
+    color: rgb(158, 158, 158);
+    text-decoration: underline;
+    line-height: 150%;
+
     cursor: pointer;
 `;
