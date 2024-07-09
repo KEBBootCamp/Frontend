@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Ic24 } from "../../assets/svg/icon";
+import { Ic24, IcMyProfile } from "../../assets/svg/icon";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -17,6 +17,9 @@ function Header() {
                     <HeaderTitle>신검</HeaderTitle>
                     <StyledIc24 />
                 </HeaderLogoButton>
+                <HeaderMyProfileButton>
+                    <StyledIcMyProfile />
+                </HeaderMyProfileButton>
             </HeaderBodyWrapper>
         </HeaderWrapper>
     );
@@ -33,6 +36,7 @@ const HeaderWrapper = styled.div`
 const HeaderBodyWrapper = styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     height: 7rem;
 `;
@@ -45,12 +49,21 @@ const HeaderLogoButton = styled.button`
 `;
 
 const HeaderTitle = styled.div`
-    padding-left: 1rem;
+    /* padding-left: 1rem; */
 
-    font-size: 4rem;
+    font-size: 3.5rem;
 `;
 
 const StyledIc24 = styled(Ic24)`
+    width: 3.5rem;
+    height: 3.5rem;
+`;
+
+const HeaderMyProfileButton = styled.button`
+    cursor: pointer;
+`;
+
+const StyledIcMyProfile = styled(IcMyProfile)`
     width: 4rem;
     height: 4rem;
 `;
