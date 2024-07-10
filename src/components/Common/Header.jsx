@@ -10,6 +10,10 @@ function Header() {
         navigate("/");
     };
 
+    const handleClickMypageButton = () => {
+        navigate("/my-page");
+    };
+
     return (
         <HeaderWrapper>
             <HeaderBodyWrapper>
@@ -17,7 +21,7 @@ function Header() {
                     <HeaderTitle>신검</HeaderTitle>
                     <StyledIc24 />
                 </HeaderLogoButton>
-                <HeaderMyProfileButton>
+                <HeaderMyProfileButton onClick={handleClickMypageButton}>
                     <StyledIcMyProfile />
                 </HeaderMyProfileButton>
             </HeaderBodyWrapper>
@@ -49,8 +53,6 @@ const HeaderLogoButton = styled.button`
 `;
 
 const HeaderTitle = styled.div`
-    /* padding-left: 1rem; */
-
     font-size: 3.5rem;
 `;
 
