@@ -1,21 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/Common/Header";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
+
+    const handleClickLoginButton = () => {
+        navigate("/");
+    };
     return (
         <LoginWrapper>
             <Header />
             <BoxContainer>
-                <BoxItem>
-                    <LoginTextWrapper>
-                        <LoginText>로그인</LoginText>
-                    </LoginTextWrapper>
-                    <IdBox />
-                    <PwdBox />
-                </BoxItem>
-                <NotMember>회원이 아닙니다.</NotMember>
+                <LoginTextWrapper>
+                    <LoginText>로그인</LoginText>
+                </LoginTextWrapper>
+                <LoginBox>
+                    <LoginBoxId>
+                        <LoginInput type="text" placeholder="아이디" />
+                    </LoginBoxId>
+                    <LoginBoxPwd>
+                        <LoginInput type="text" placeholder="비밀번호" />
+                    </LoginBoxPwd>
+                </LoginBox>
             </BoxContainer>
+            <LoginContainer>
+                <LoginButton onClick={handleClickLoginButton}>로그인</LoginButton>
+                <NotMember>회원이 아닙니다.</NotMember>
+            </LoginContainer>
         </LoginWrapper>
     );
 }
@@ -29,33 +42,6 @@ const LoginWrapper = styled.div`
 `;
 
 const BoxContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-
-    border-radius: 1rem;
-    margin-top: 3rem;
-
-    background-color: rgb(245, 245, 247);
-`;
-
-const LoginTextWrapper = styled.div`
-    width: 70%;
-    height: 5rem;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: 400;
-    font-size: 4rem;
-
-    background-color: lightblue;
-`;
-
-const LoginText = styled.div``;
-const BoxItem = styled.div`
-    width: 100%;
     height: 30rem;
 
     display: flex;
@@ -65,21 +51,67 @@ const BoxItem = styled.div`
     gap: 2rem;
 
     border-radius: 1rem;
-    background-color: #bcbcbc;
+    margin-top: 3rem;
+
+    background-color: rgb(245, 245, 247);
 `;
 
-const IdBox = styled.div`
+const LoginTextWrapper = styled.div`
     width: 70%;
-    height: 5rem;
 
-    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-weight: 400;
+    font-size: 4rem;
 `;
 
-const PwdBox = styled.div`
+const LoginBox = styled.div`
     width: 70%;
-    height: 5rem;
 
-    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
+
+const LoginBoxId = styled.div``;
+
+const LoginBoxPwd = styled.div``;
+
+const LoginInput = styled.input`
+    width: 100%;
+    height: 4.5rem;
+
+    border: none;
+    border: 0.05rem solid #9e9e9e;
+    border-radius: 0.5rem;
+`;
+
+const LoginText = styled.div``;
+
+const LoginContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+`;
+
+const LoginButton = styled.button`
+    width: 100%;
+    height: 6rem;
+
+    font-weight: 600;
+    font-size: 1.8rem;
+
+    margin-top: 4rem;
+
+    border-radius: 1rem;
+    background-color: #4784ff;
+    color: white;
+
+    cursor: pointer;
 `;
 
 const NotMember = styled.button`
