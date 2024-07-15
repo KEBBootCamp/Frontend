@@ -1,46 +1,45 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from "date-fns/locale";
+import { IcCalendar } from "../../assets/svg/icon";
 
-function Calendar() {
-    const [input, setInput] = useState({ createdDate: new Date() });
+const Calendar = () => {
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const getStringedDate = (targetDate) => {
-        // 날짜 -> YYYY-MM-DD
-        let year = targetDate.getFullYear();
-        let month = targetDate.getMonth() + 1;
-        let date = targetDate.getDate();
-
-        if (month < 10) {
-            month = `0${month}`;
-        }
-        if (date < 10) {
-            date = `0${date}`;
-        }
-
-        return `${year}-${month}-${date}`;
-    };
-
-    const onChangeInput = (e) => {
-        let name = e.target.name;
-        let value = e.target.value;
-
-        if (name === "createdDate") {
-            value = new Date(value);
-        }
-
-        setInput({
-            ...input,
-            [name]: value,
-        });
-    };
     return (
-        <CalendarWrapper>
-            <input name="createdDate" onChange={onChangeInput} value={getStringedDate(input.createdDate)} type="date" />
-        </CalendarWrapper>
+        <DatePickerWrapper>
+            <DatePicker
+                dateFormat="yyyy-MM-dd" // 날짜 형태
+                locale={ko}
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                minDate={new Date()} //현재 날짜 이전은 모두 선택 불가
+                shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+                // className={styles.datePicker}
+            />
+            <StyledCalendar />
+        </DatePickerWrapper>
     );
-}
+};
 
 export default Calendar;
 
-const CalendarWrapper = styled.div``;
+const DatePickerWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    color: white;
+    cursor: pointer;
+
+    padding: 2rem;
+`;
+
+const StyledCalendar = styled(IcCalendar)`
+    width: 2rem;
+    height: 2rem;
+`;
