@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { IcChecked } from "../../assets/svg/icon";
+import { useNavigate } from "react-router-dom";
 
 function SignUpDone() {
+    const navigate = useNavigate();
+
+    const handleClickDoneBtn = () => {
+        navigate("/my-page");
+    };
     return (
         <SignUpDoneWrapper>
             <SignUpDoneContainer>
@@ -12,7 +18,7 @@ function SignUpDone() {
                 <SignUpDoneText>회원가입 성공!</SignUpDoneText>
             </SignUpDoneTextWrapper>
             <SelectDoneBtnWrapper>
-                <SelectDoneBtn>완료</SelectDoneBtn>
+                <SelectDoneBtn onClick={handleClickDoneBtn}>완료</SelectDoneBtn>
             </SelectDoneBtnWrapper>
         </SignUpDoneWrapper>
     );
