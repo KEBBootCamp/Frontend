@@ -8,6 +8,7 @@ import SignUpUsage from "./components/SignUp/SignUpUsage";
 import SignUp1 from "./components/SignUp/SignUp1";
 import SignUp2 from "./components/SignUp/SignUp2";
 import SignUpDone from "./components/SignUp/SignUpDone";
+import Loading from "./pages/Loading";
 
 function Router() {
     return (
@@ -16,11 +17,13 @@ function Router() {
                 <Route path="/" element={<Home />} />
                 <Route path="/expert-list" element={<ExpertList />} />
                 <Route path="/login" element={<Login />} />
+
                 <Route path="/my-page" element={<Mypage />} />
                 <Route path="/sign-up-usage" element={<SignUpUsage />} />
                 <Route path="/sign-up-1" element={<SignUp1 />} />
                 <Route path="/sign-up-2" element={<SignUp2 />} />
                 <Route path="/sign-up-done" element={<SignUpDone />} />
+                <Route path="/loading" element={<Loading />} />
             </Routes>
         </BrowserRouter>
     );
