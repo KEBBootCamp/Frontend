@@ -7,7 +7,7 @@ function BackHeader() {
     const navigate = useNavigate();
 
     const handleClickBackButton = () => {
-        navigate("/login");
+        navigate(-1);
     };
     return (
         <BackHeaderWrapper>
