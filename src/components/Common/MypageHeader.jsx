@@ -29,6 +29,5 @@ const MypageHeaderBox = styled.div`
     align-items: center;
     margin-right: 6rem;
 
-    font-weight: 600;
     font-size: 2rem;
 `;

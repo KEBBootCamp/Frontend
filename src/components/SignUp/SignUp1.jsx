@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 function SignUp1() {
     const navigate = useNavigate();
 
-    // const handleClickNextBtn = () => {
-    //     navigate("/sign-up-2");
-    // };
+    const handleClickNextBtn = () => {
+        navigate("/sign-up-2");
+    };
 
     // const handleClickBackBtn = () => {
     //     navigate("/sign-up-usage");
@@ -30,7 +30,7 @@ function SignUp1() {
                     </TextBoxWrapper>
                 </InputBox>
                 <SelectNextBtnWrapper>
-                    <SelectNextBtn>다음</SelectNextBtn>
+                    <SelectNextBtn onClick={handleClickNextBtn}>다음</SelectNextBtn>
                 </SelectNextBtnWrapper>
             </SignUp1Container>
         </SignUp1Wrapper>
@@ -59,7 +59,6 @@ const SignUp1Question = styled.div`
     margin-top: 3rem;
 
     font-size: 2rem;
-    font-weight: 600;
 `;
 
 const SignUp1Text = styled.div``;
@@ -73,7 +72,7 @@ const SelectNextBtn = styled.button`
     width: 100%;
     height: 6rem;
 
-    font-weight: 600;
+    font-weight: 300;
     font-size: 1.8rem;
 
     margin-top: 10rem;

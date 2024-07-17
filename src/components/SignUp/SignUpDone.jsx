@@ -59,7 +59,6 @@ const SignUpDoneTextWrapper = styled.div`
 `;
 
 const SignUpDoneText = styled.div`
-    font-weight: 600;
     font-size: 2.5rem;
 `;
 
@@ -72,7 +71,7 @@ const SelectDoneBtn = styled.button`
     width: 100%;
     height: 6rem;
 
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.8rem;
 
     margin-top: 10rem;
