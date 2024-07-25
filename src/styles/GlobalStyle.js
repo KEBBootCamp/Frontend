@@ -11,9 +11,10 @@ const GlobalStyle = createGlobalStyle`
     html {
         max-width: 43rem;
         height: 100dvh;
-        
+
+        font-family: 'Pretendard-Regular';
         font-size: 62.5%;
-        background-color: #f2f2f2;
+        /* background-color: #f2f2f2; */
 
         display: flex;
         justify-content: center;
