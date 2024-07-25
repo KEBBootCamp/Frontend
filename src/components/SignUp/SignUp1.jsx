@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackHeader from "../common/BackHeader";
 import { useNavigate } from "react-router-dom";
 
 function SignUp1() {
     const navigate = useNavigate();
+    const [isRight, setIsRight] = useState(false);
+    const [name, setName] = useState("");
+    const [phoneNum, setPhoneNum] = useState("");
+
+    const userName = (e) => {
+        setName(e.target.value);
+    };
+    const userPhoneNum = (e) => {
+        setPhoneNum(e.target.value);
+    };
+
+    useEffect(() => {
+        if (name.length < 5 && phoneNum.length >= 10) {
+            setIsRight(true);
+        } else {
+            setIsRight(false);
+        }
+    }, [name, phoneNum]);
 
     const handleClickNextBtn = () => {
         navigate("/sign-up-2");
     };
-
-    // const handleClickBackBtn = () => {
-    //     navigate("/sign-up-usage");
-    // };
 
     return (
         <SignUp1Wrapper>
@@ -23,14 +37,16 @@ function SignUp1() {
                 </SignUp1Question>
                 <InputBox>
                     <TextBoxWrapper>
-                        <TextBox type="text" placeholder="이름" />
+                        <TextBox type="text" placeholder="이름" value={name} onChange={userName} />
                     </TextBoxWrapper>
                     <TextBoxWrapper>
-                        <TextBox type="text" placeholder="연락처" />
+                        <TextBox type="text" placeholder="연락처" value={phoneNum} onChange={userPhoneNum} />
                     </TextBoxWrapper>
                 </InputBox>
                 <SelectNextBtnWrapper>
-                    <SelectNextBtn onClick={handleClickNextBtn}>다음</SelectNextBtn>
+                    <SelectNextBtn onClick={handleClickNextBtn} isRight={isRight}>
+                        다음
+                    </SelectNextBtn>
                 </SelectNextBtnWrapper>
             </SignUp1Container>
         </SignUp1Wrapper>
@@ -78,7 +94,7 @@ const SelectNextBtn = styled.button`
     margin-top: 10rem;
 
     border-radius: 1rem;
-    background-color: #4784ff;
+    background-color: ${({ isRight }) => (isRight ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;
