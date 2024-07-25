@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackHeader from "../common/BackHeader";
 import { useNavigate } from "react-router-dom";
 
 function SignUp2() {
     const navigate = useNavigate();
-
-    const handleClickNextBtn = () => {
-        navigate("/sign-up-done");
-    };
+    const [isValid, setIsValid] = useState(false);
+    const [pwdInput, setPwdInput] = useState("");
+    const [pwdCheck, setPwdCheck] = useState("");
 
     const handleClickBackBtn = () => {
         navigate("/sign-up-1");
     };
+    const handleClickNextBtn = () => {
+        navigate("/sign-up-done");
+    };
+
+    const userPwdInput = (e) => {
+        setPwdInput(e.target.value);
+    };
+
+    const userPwdCheck = (e) => {
+        setPwdCheck(e.target.value);
+    };
+
+    useEffect(() => {
+        if (pwdInput === pwdCheck && pwdInput.length > 4) {
+            setIsValid(true);
+        } else {
+            setIsValid(false);
+        }
+    }, [pwdInput, pwdCheck]);
 
     return (
         <SignUp2Wrapper>
@@ -26,14 +44,16 @@ function SignUp2() {
                         <TextBox type="text" placeholder="아이디" />
                     </TextBoxWrapper>
                     <TextBoxWrapper>
-                        <TextBox type="text" placeholder="비밀번호" />
+                        <TextBox type="password" placeholder="비밀번호" value={pwdInput} onChange={userPwdInput} />
                     </TextBoxWrapper>
                     <TextBoxWrapper>
-                        <TextBox type="text" placeholder="비밀번호 확인" />
+                        <TextBox type="password" placeholder="비밀번호 확인" value={pwdCheck} onChange={userPwdCheck} />
                     </TextBoxWrapper>
                 </InputBox>
                 <SelectNextBtnWrapper>
-                    <SelectNextBtn onClick={handleClickNextBtn}>완료</SelectNextBtn>
+                    <SelectNextBtn onClick={handleClickNextBtn} isValid={isValid}>
+                        완료
+                    </SelectNextBtn>
                 </SelectNextBtnWrapper>
             </SignUp2Container>
         </SignUp2Wrapper>
@@ -81,7 +101,7 @@ const SelectNextBtn = styled.button`
     margin-top: 5rem;
 
     border-radius: 1rem;
-    background-color: #4784ff;
+    background-color: ${({ isValid }) => (isValid ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;
