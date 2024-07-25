@@ -61,7 +61,7 @@ const SignUpTextWrapper = styled.div`
 const SignUpText = styled.div``;
 
 const UsageBtnWrapper = styled.div`
-    width: 70%;
+    width: 75%;
 
     display: flex;
     flex-direction: column;
