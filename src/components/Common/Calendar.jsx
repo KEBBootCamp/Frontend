@@ -5,22 +5,25 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
 import { IcCalendar } from "../../assets/svg/icon";
+import "./datepicker.custom.css";
 
 const Calendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     return (
         <DatePickerWrapper>
-            <DatePicker
-                dateFormat="yyyy-MM-dd" // 날짜 형태
-                locale={ko}
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                minDate={new Date()} //현재 날짜 이전은 모두 선택 불가
-                shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
-                // className={styles.datePicker}
-            />
-            <StyledCalendar />
+            <DatePickerContainer>
+                <DatePicker
+                    dateFormat="yyyy-MM-dd" // 날짜 형태
+                    locale={ko}
+                    selected={selectedDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    minDate={new Date()} //현재 날짜 이전은 모두 선택 불가
+                    shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+                    // className={styles.datePicker}
+                />
+                <StyledCalendar />
+            </DatePickerContainer>
         </DatePickerWrapper>
     );
 };
@@ -37,6 +40,13 @@ const DatePickerWrapper = styled.div`
     cursor: pointer;
 
     padding: 2rem;
+`;
+
+const DatePickerContainer = styled.div`
+    display: flex;
+    /* width: 100%; */
+    padding: 0.5rem 1rem;
+    border: 1px solid black;
 `;
 
 const StyledCalendar = styled(IcCalendar)`
