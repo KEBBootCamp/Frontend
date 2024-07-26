@@ -13,7 +13,9 @@ function SignUp2() {
         navigate("/sign-up-1");
     };
     const handleClickNextBtn = () => {
-        navigate("/sign-up-done");
+        if (isValid) {
+            navigate("/sign-up-done");
+        }
     };
 
     const userPwdInput = (e) => {
@@ -34,7 +36,7 @@ function SignUp2() {
 
     return (
         <SignUp2Wrapper>
-            <BackHeader onClick={handleClickBackBtn} />
+            <BackHeader />
             <SignUp2Container>
                 <SignUp2Question>
                     <SignUp2Text>아이디와 비밀번호 생성하기</SignUp2Text>

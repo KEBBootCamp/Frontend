@@ -25,7 +25,9 @@ function Login() {
     }, [id, pwd]);
 
     const handleClickLoginButton = () => {
-        navigate("/");
+        if (isSatisfied) {
+            navigate("/");
+        }
     };
 
     const handleClickNotMemberButton = () => {
@@ -144,8 +146,7 @@ const LoginButton = styled.button`
     border-radius: 1rem;
     background-color: ${({ isSatisfied }) => (isSatisfied ? "#4784ff" : "#cde9f4")};
     color: white;
-
-    cursor: pointer;
+    cursor: ${({ isSatisfied }) => (isSatisfied ? "pointer" : "not-allowed")};
 `;
 
 const NotMember = styled.button`

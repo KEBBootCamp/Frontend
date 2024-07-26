@@ -25,7 +25,9 @@ function SignUp1() {
     }, [name, phoneNum]);
 
     const handleClickNextBtn = () => {
-        navigate("/sign-up-2");
+        if (isRight) {
+            navigate("/sign-up-2");
+        }
     };
 
     return (
