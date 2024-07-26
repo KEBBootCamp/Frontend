@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackHeader from "../common/BackHeader";
 import { useNavigate } from "react-router-dom";
 
 function SignUpUsage() {
     const navigate = useNavigate();
+    const [isUserClicked, setIsUserClicked] = useState(false);
+    const [isExpertClicked, setIsExpertClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
     const handleClickDoneBtn = () => {
-        navigate("/sign-up-1");
+        if (isClicked) {
+            navigate("/sign-up-1");
+        }
     };
 
-    // const handleClickBackBtn = () => {
-    //     navigate("/login");
-    // };
+    const handleClickUserBtn = () => {
+        setIsUserClicked(true);
+        setIsExpertClicked(false);
+        setIsClicked(true);
+    };
+
+    const handleClickExpertBtn = () => {
+        setIsUserClicked(false);
+        setIsExpertClicked(true);
+        setIsClicked(true);
+    };
 
     return (
         <SignUpUsageWrapper>
@@ -23,11 +36,17 @@ function SignUpUsage() {
                     <SignUpText>이 앱을 어떤 용도로 사용하시나요?</SignUpText>
                 </SignUpTextWrapper>
                 <UsageBtnWrapper>
-                    <UsageBtn>사용자</UsageBtn>
-                    <UsageBtn>전문가</UsageBtn>
+                    <UsageBtn isClicked={isUserClicked} onClick={handleClickUserBtn}>
+                        사용자
+                    </UsageBtn>
+                    <UsageBtn isClicked={isExpertClicked} onClick={handleClickExpertBtn}>
+                        전문가
+                    </UsageBtn>
                 </UsageBtnWrapper>
                 <SelectDoneBtnWrapper>
-                    <SelectDoneBtn onClick={handleClickDoneBtn}>완료</SelectDoneBtn>
+                    <SelectDoneBtn onClick={handleClickDoneBtn} isClicked={isClicked}>
+                        완료
+                    </SelectDoneBtn>
                 </SelectDoneBtnWrapper>
             </SignUpUsageContainer>
         </SignUpUsageWrapper>
@@ -77,7 +96,8 @@ const UsageBtn = styled.button`
     font-size: 1.6rem;
     font-weight: 500;
 
-    background-color: rgb(245, 245, 247);
+    background-color: ${({ isClicked }) => (isClicked ? "rgb(201, 201, 201)" : "rgb(231, 231, 231)")};
+
     color: rgb(4, 41, 63);
 `;
 
@@ -95,15 +115,8 @@ const SelectDoneBtn = styled.button`
     margin-top: 10rem;
 
     border-radius: 1rem;
-    background-color: #4784ff;
+    background-color: ${({ isClicked }) => (isClicked ? "#4784ff" : "#cde9f4")};
     color: white;
-
-    cursor: pointer;
-`;
-
-const BackHeaderBackButton = styled.button`
-    width: 2rem;
-    height: 2rem;
 
     cursor: pointer;
 `;
