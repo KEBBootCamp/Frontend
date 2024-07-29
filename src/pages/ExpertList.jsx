@@ -3,15 +3,12 @@ import styled from "styled-components";
 import Header from "../components/common/Header";
 import { IcUser } from "../assets/svg/icon";
 import { useNavigate } from "react-router-dom";
-import MatchingModal from "../components/common/MatchingModal";
 
 function ExpertList() {
     const navigate = useNavigate();
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     const handleClickMatchingButton = () => {
-        setIsModalOpen(true);
+        navigate("/expert-detail");
     };
 
     return (
@@ -24,8 +21,9 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 홍길동</ExpertRightBoxName>
-                        <ExpertRightBoxPhoneNum>연락처 : 010-1111-1234</ExpertRightBoxPhoneNum>
-                        <ExpertRightBoxIntro>한 줄 소개 : 현대차 검수에 특화된 전문가입니다!</ExpertRightBoxIntro>
+                        <ExpertMainCarFactory>주력 제조사 : 폭스바겐</ExpertMainCarFactory>
+                        {/* <ExpertRightBoxPhoneNum>연락처 : 010-1111-1234</ExpertRightBoxPhoneNum> */}
+                        <ExpertRightBoxIntro>현장에서 모든 걸 보여드립니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <ExpertListBoxWrapper>
@@ -34,8 +32,9 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 뽀로로</ExpertRightBoxName>
-                        <ExpertRightBoxPhoneNum>연락처 : 010-2222-1234</ExpertRightBoxPhoneNum>
-                        <ExpertRightBoxIntro>한 줄 소개 : 편하게 연락주십쇼!</ExpertRightBoxIntro>
+                        <ExpertMainCarFactory>주력 제조사 : BMW</ExpertMainCarFactory>
+                        {/* <ExpertRightBoxPhoneNum>연락처 : 010-2222-1234</ExpertRightBoxPhoneNum> */}
+                        <ExpertRightBoxIntro>편하게 연락주십쇼!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <ExpertListBoxWrapper>
@@ -44,8 +43,9 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 훌랄라</ExpertRightBoxName>
-                        <ExpertRightBoxPhoneNum>연락처 : 010-3333-1234</ExpertRightBoxPhoneNum>
-                        <ExpertRightBoxIntro>한 줄 소개 : 언제든지 문의 환영합니다!</ExpertRightBoxIntro>
+                        <ExpertMainCarFactory>주력 제조사 : 볼보</ExpertMainCarFactory>
+                        {/* <ExpertRightBoxPhoneNum>연락처 : 010-3333-1234</ExpertRightBoxPhoneNum> */}
+                        <ExpertRightBoxIntro>언제든지 문의 환영합니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <MatchingBtnWrapper>
@@ -114,6 +114,9 @@ const ExpertRightBox = styled.div`
 `;
 
 const ExpertRightBoxName = styled.div`
+    width: 20rem;
+`;
+const ExpertMainCarFactory = styled.div`
     width: 20rem;
 `;
 const ExpertRightBoxPhoneNum = styled.div`
