@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IcUser } from "../assets/svg/icon";
-import MypageHeader from "../components/Common/MypageHeader";
+import MypageHeader from "../components/common/MypageHeader";
+import Toggle from "../components/common/Toggle";
 
 function Mypage() {
+    const [IsExpert, setIsExpert] = useState(false);
+    const [IsUser, setIsUser] = useState(true);
+
     return (
         <MypageWrapper>
             <MypageHeader />
@@ -21,29 +25,30 @@ function Mypage() {
                     </MypageRightBox>
                 </MypageBoxWrapper>
                 <MyInfoFixBox>
-                    <MypageFixDiv>
-                        내 정보 수정
-                        <FixFinishButton>완료</FixFinishButton>
-                    </MypageFixDiv>
-                    <SelectButtonDiv>
-                        <SelectButton>전문가</SelectButton>
-                        <SelectButton>사용자</SelectButton>
-                    </SelectButtonDiv>
-                    <FixExpertDiv>
-                        <FixExpertBox>
-                            경력
-                            <FixExpertRightBox>3년</FixExpertRightBox>
-                        </FixExpertBox>
-                        <FixExpertBox>
-                            한줄소개
-                            <FixExpertRightBox>실망시키지 않겠습니다!</FixExpertRightBox>
-                        </FixExpertBox>
-                        <FixExpertBox>
-                            분야
-                            <FixExpertRightBox>현대</FixExpertRightBox>
-                        </FixExpertBox>
-                    </FixExpertDiv>
+                    <MyInfoFix>내 정보 수정</MyInfoFix>
                 </MyInfoFixBox>
+                <ToggleBtnWrapper>
+                    <Toggle />
+                    <FixDoneButton>저장하기</FixDoneButton>
+                </ToggleBtnWrapper>
+
+                <ToggleBoxContainer>
+                    {/* <ToggleUserBox>사용자</ToggleUserBox> */}
+                    <ToggleExpertBox>
+                        <ExpertWrapper>
+                            <ExpertText>경력</ExpertText>
+                            <ExpertCareer type="text" placeholder="00년" />
+                        </ExpertWrapper>
+                        <ExpertWrapper>
+                            <ExpertText>연락처</ExpertText>
+                            <ExpertPhoneNum type="text" placeholder="010-0000-0000" />
+                        </ExpertWrapper>
+                        <ExpertWrapper>
+                            <ExpertText>한 줄 소개</ExpertText>
+                            <ExpertIntro type="text" placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!" />
+                        </ExpertWrapper>
+                    </ToggleExpertBox>
+                </ToggleBoxContainer>
             </MypageBodyWrapper>
         </MypageWrapper>
     );
@@ -99,6 +104,7 @@ const MypageRightBox = styled.div`
 
 const MypageRightBoxName = styled.div`
     width: 20rem;
+    margin-left: 0.8rem;
     font-size: 1.9rem;
 `;
 
@@ -106,87 +112,105 @@ const MypageRightBoxJob = styled.div`
     width: 20rem;
 
     display: flex;
-    column-gap: 5rem;
     align-items: center;
+    justify-content: center;
+    column-gap: 5rem;
 `;
 
 const LogoutButton = styled.button`
     width: 8rem;
     height: 3rem;
     border-radius: 0.7rem;
+
     font-size: 1.5rem;
 
+    margin-left: 2rem;
     background-color: rgb(4, 41, 63);
     color: white;
 `;
 
 const MyInfoFixBox = styled.div`
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
-    justify-content: center;
+    padding: 1.3rem;
 
-    padding: 2rem 1.6rem 1rem;
+    border-bottom: 0.6rem solid rgb(231, 231, 231);
 `;
 
-const MypageFixDiv = styled.div`
-    display: flex;
-
-    align-items: center;
-    column-gap: 14rem;
+const MyInfoFix = styled.div`
     color: rgb(188, 188, 188);
 
-    font-weight: 600;
     font-size: 1.5rem;
+
+    margin-left: 1rem;
 `;
 
-const SelectButtonDiv = styled.div`
-    width: 100%;
-    height: 3.2rem;
-
-    margin-left: 5rem;
-    margin-top: 2rem;
+const ToggleBtnWrapper = styled.div`
     display: flex;
-    gap: 5rem;
+    align-items: center;
+    column-gap: 5rem;
 `;
-const SelectButton = styled.button`
+
+const FixDoneButton = styled.button`
     width: 8rem;
     height: 3rem;
+
     border-radius: 0.7rem;
     font-size: 1.5rem;
 
+    margin-left: 3.3rem;
     background-color: rgb(4, 41, 63);
     color: white;
 `;
-const FixFinishButton = styled.button`
-    width: 6rem;
-    height: 3rem;
-    border-radius: 0.7rem;
-    font-size: 1.5rem;
+const ToggleBoxContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 
-    background-color: rgb(4, 41, 63);
-    color: white;
+    border-radius: 1rem;
+
+    background-color: rgb(245, 245, 247);
 `;
 
-const FixExpertDiv = styled.div`
-    width: 100%;
+const ToggleExpertBox = styled.div`
+    width: 30rem;
+    height: 30rem;
 
-    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
 
-    font-size: 1.6rem;
+    border-radius: 1rem;
+
+    padding: 0 2.5rem;
+
+    font-size: 2rem;
     background-color: white;
 `;
 
-const FixExpertBox = styled.div`
-    width: 100%;
-    height: 4rem;
+const ExpertWrapper = styled.div`
+    height: 4.5rem;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-
-    column-gap: 7rem;
+    justify-content: space-between;
 `;
 
-const FixExpertRightBox = styled.div``;
+const ExpertText = styled.div``;
+
+const ExpertCareer = styled.input`
+    width: 11rem;
+`;
+
+const ExpertPhoneNum = styled.input`
+    width: 11rem;
+`;
+
+const ExpertIntro = styled.textarea`
+    height: 5rem;
+`;
