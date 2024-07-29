@@ -21,14 +21,20 @@ function Toggle() {
 
 export default Toggle;
 
-const ToggleContainer = styled.div``;
+const ToggleContainer = styled.div`
+    height: 8rem;
+
+    display: flex;
+    align-items: center;
+    margin-right: 6rem;
+`;
 const ToggleWrapper = styled.div`
     width: 6rem;
     height: 2.5rem;
 
-    position: absolute;
-    top: 38%;
-    left: 15%;
+    margin-top: 1rem;
+    margin-left: 5rem;
+
     transform: translate(-50%, -50%);
     cursor: pointer;
 
@@ -53,7 +59,7 @@ const ToggleWrapper = styled.div`
         height: 22px;
 
         transition: 0.4s;
-        position: absolute;
+        position: fixed;
         top: 1px;
         left: 1px;
 
@@ -61,14 +67,15 @@ const ToggleWrapper = styled.div`
         background-color: #ffffff;
 
         &.toggle--checked {
-            left: 27px;
+            left: 35px;
             transition: 0.4s;
         }
     }
 `;
 
 const Desc = styled.div`
-    font-size: 1.6rem;
     text-align: center;
     margin-top: 0.5rem;
+
+    font-size: 1.6rem;
 `;
