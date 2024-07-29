@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Header from "../components/common/Header";
 import { IcUser } from "../assets/svg/icon";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function ExpertList() {
     const navigate = useNavigate();
 
-    const handleClickMatchingButton = () => {
+    const handleClickExpertButton = () => {
         navigate("/expert-detail");
     };
 
@@ -15,14 +15,14 @@ function ExpertList() {
         <ExpertListWrapper>
             <Header />
             <ExpertBodyWrapper>
-                <ExpertListBoxWrapper>
+                <ExpertListBoxWrapper onClick={handleClickExpertButton}>
                     <ExpertLeftBox>
                         <StyledIcUser />
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 홍길동</ExpertRightBoxName>
                         <ExpertMainCarFactory>주력 제조사 : 폭스바겐</ExpertMainCarFactory>
-                        {/* <ExpertRightBoxPhoneNum>연락처 : 010-1111-1234</ExpertRightBoxPhoneNum> */}
+
                         <ExpertRightBoxIntro>현장에서 모든 걸 보여드립니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
@@ -33,7 +33,7 @@ function ExpertList() {
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 뽀로로</ExpertRightBoxName>
                         <ExpertMainCarFactory>주력 제조사 : BMW</ExpertMainCarFactory>
-                        {/* <ExpertRightBoxPhoneNum>연락처 : 010-2222-1234</ExpertRightBoxPhoneNum> */}
+
                         <ExpertRightBoxIntro>편하게 연락주십쇼!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
@@ -44,13 +44,32 @@ function ExpertList() {
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 훌랄라</ExpertRightBoxName>
                         <ExpertMainCarFactory>주력 제조사 : 볼보</ExpertMainCarFactory>
-                        {/* <ExpertRightBoxPhoneNum>연락처 : 010-3333-1234</ExpertRightBoxPhoneNum> */}
+
                         <ExpertRightBoxIntro>언제든지 문의 환영합니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
-                <MatchingBtnWrapper>
-                    <MatchingBtn onClick={handleClickMatchingButton}>매칭하기</MatchingBtn>
-                </MatchingBtnWrapper>
+                <ExpertListBoxWrapper onClick={handleClickExpertButton}>
+                    <ExpertLeftBox>
+                        <StyledIcUser />
+                    </ExpertLeftBox>
+                    <ExpertRightBox>
+                        <ExpertRightBoxName>이름 : 케로로</ExpertRightBoxName>
+                        <ExpertMainCarFactory>주력 제조사 : 기아</ExpertMainCarFactory>
+
+                        <ExpertRightBoxIntro>믿어주세요</ExpertRightBoxIntro>
+                    </ExpertRightBox>
+                </ExpertListBoxWrapper>
+                <ExpertListBoxWrapper>
+                    <ExpertLeftBox>
+                        <StyledIcUser />
+                    </ExpertLeftBox>
+                    <ExpertRightBox>
+                        <ExpertRightBoxName>이름 : 꺄르르</ExpertRightBoxName>
+                        <ExpertMainCarFactory>주력 제조사 : 르노삼성</ExpertMainCarFactory>
+
+                        <ExpertRightBoxIntro>문의 환영</ExpertRightBoxIntro>
+                    </ExpertRightBox>
+                </ExpertListBoxWrapper>
             </ExpertBodyWrapper>
         </ExpertListWrapper>
     );
@@ -119,9 +138,7 @@ const ExpertRightBoxName = styled.div`
 const ExpertMainCarFactory = styled.div`
     width: 20rem;
 `;
-const ExpertRightBoxPhoneNum = styled.div`
-    width: 20rem;
-`;
+
 const ExpertRightBoxIntro = styled.div`
     width: 20rem;
 `;
