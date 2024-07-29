@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Header from "../components/Common/Header";
+import Header from "../components/common/Header";
 import { IcUser } from "../assets/svg/icon";
+import { useNavigate } from "react-router-dom";
+import MatchingModal from "../components/common/MatchingModal";
 
 function ExpertList() {
+    const navigate = useNavigate();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleClickMatchingButton = () => {
+        setIsModalOpen(true);
+    };
+
     return (
         <ExpertListWrapper>
             <Header />
@@ -38,6 +48,9 @@ function ExpertList() {
                         <ExpertRightBoxIntro>한 줄 소개 : 언제든지 문의 환영합니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
+                <MatchingBtnWrapper>
+                    <MatchingBtn onClick={handleClickMatchingButton}>매칭하기</MatchingBtn>
+                </MatchingBtnWrapper>
             </ExpertBodyWrapper>
         </ExpertListWrapper>
     );
@@ -108,4 +121,26 @@ const ExpertRightBoxPhoneNum = styled.div`
 `;
 const ExpertRightBoxIntro = styled.div`
     width: 20rem;
+`;
+
+const MatchingBtnWrapper = styled.div`
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+`;
+
+const MatchingBtn = styled.button`
+    width: 100%;
+    height: 6rem;
+
+    font-size: 1.8rem;
+
+    border-radius: 1rem;
+    background-color: #4784ff;
+    color: white;
+
+    cursor: pointer;
 `;
