@@ -11,7 +11,7 @@ function Header() {
     };
 
     const handleClickMypageButton = () => {
-        navigate("/my-page");
+        navigate("/user-my-page");
     };
 
     return (
