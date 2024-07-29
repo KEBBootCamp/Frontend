@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Common/Header";
+import Header from "../components/common/Header";
+import Dropdown from "../components/common/Dropdown";
+import Calendar from "../components/common/Calendar";
 
 function Home() {
     const navigate = useNavigate();
@@ -16,20 +18,32 @@ function Home() {
     return (
         <HomePageWrapper>
             <Header />
-            <BoxWrapper>
-                <DropDownWrapper>
-                    <LeftDropDown>제조사</LeftDropDown>
-                </DropDownWrapper>
-                <DropDownWrapper>
-                    <LeftDropDown>모델</LeftDropDown>
-                </DropDownWrapper>
-                <DropDownWrapper>
-                    <LeftDropDown>검수 장소</LeftDropDown>
-                </DropDownWrapper>
-                <DropDownWrapper>
-                    <LeftDropDown>검수 날짜</LeftDropDown>
-                </DropDownWrapper>
-            </BoxWrapper>
+            <SelectBodyWrapper>
+                <SelectBoxWrapper>
+                    <LeftBox>제조사</LeftBox>
+                    <RightBox>
+                        <Dropdown />
+                    </RightBox>
+                </SelectBoxWrapper>
+                <SelectBoxWrapper>
+                    <LeftBox>모델</LeftBox>
+                    <RightBox>
+                        <Dropdown />
+                    </RightBox>
+                </SelectBoxWrapper>
+                <SelectBoxWrapper>
+                    <LeftBox>검수 장소</LeftBox>
+                    <RightBox>
+                        <Dropdown />
+                    </RightBox>
+                </SelectBoxWrapper>
+                <SelectBoxWrapper>
+                    <LeftBox>검수 날짜</LeftBox>
+                    <RightBox>
+                        <Calendar />
+                    </RightBox>
+                </SelectBoxWrapper>
+            </SelectBodyWrapper>
             <ButtonWrapper>
                 <FindButton onClick={handleClickFindButton}>찾기</FindButton>
                 <LoginBox onClick={handleClickLoginButton}>로그인/회원가입</LoginBox>
@@ -46,22 +60,23 @@ const HomePageWrapper = styled.div`
     padding: 2rem;
 `;
 
-const BoxWrapper = styled.div`
+const SelectBodyWrapper = styled.div`
     border-radius: 5px;
-    margin-top: 3rem;
+    margin-top: 2rem;
 `;
 
-const DropDownWrapper = styled.div`
+const SelectBoxWrapper = styled.div`
     width: 100%;
     height: 10rem;
+
+    display: flex;
 
     font-size: 2rem;
     background-color: rgb(245, 245, 247);
 `;
 
-const LeftDropDown = styled.div`
+const LeftBox = styled.div`
     width: 10rem;
-    height: 10rem;
 
     display: flex;
     flex-direction: column;
@@ -69,6 +84,10 @@ const LeftDropDown = styled.div`
     justify-content: center;
 
     background-color: #bcbcbc;
+`;
+
+const RightBox = styled.div`
+    width: calc(100% - 10rem);
 `;
 
 const ButtonWrapper = styled.div`
@@ -83,7 +102,6 @@ const FindButton = styled.button`
     width: 100%;
     height: 6rem;
 
-    font-weight: 600;
     font-size: 1.8rem;
 
     border-radius: 1rem;
@@ -96,6 +114,7 @@ const FindButton = styled.button`
 const LoginBox = styled.button`
     height: 2rem;
 
+    font-size: 1.4rem;
     color: rgb(158, 158, 158);
     text-decoration: underline;
     line-height: 150%;
