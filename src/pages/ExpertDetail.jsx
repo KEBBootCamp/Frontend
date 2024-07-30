@@ -10,6 +10,15 @@ function ExpertDetail() {
     const handleClickHomeBtn = () => {
         navigate("/");
     };
+
+    const handleClickApplyBtn = () => {
+        if (window.confirm("정말 신청하시겠습니까?")) {
+            alert("신청이 완료되었습니다.");
+            navigate("/user-my-page");
+        } else {
+            alert("신청이 취소되었습니다.");
+        }
+    };
     return (
         <ExpertDetailWrapper>
             <HeaderWrapper>
@@ -38,7 +47,7 @@ function ExpertDetail() {
                 </ExpertBottomBoxWrapper>
             </ExpertDetailContainer>
             <ExpertBackBtnWrapper>
-                <ExpertMatchingBtn>신청하기</ExpertMatchingBtn>
+                <ExpertMatchingBtn onClick={handleClickApplyBtn}>신청하기</ExpertMatchingBtn>
             </ExpertBackBtnWrapper>
         </ExpertDetailWrapper>
     );
@@ -82,7 +91,7 @@ const StyledIcHome = styled(IcHome)`
 `;
 
 const ExpertDetailContainer = styled.div`
-    height: 40rem;
+    height: 35rem;
 
     display: flex;
     flex-direction: column;
