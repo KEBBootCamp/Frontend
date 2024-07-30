@@ -51,13 +51,11 @@ export default ExpertMypage;
 const MypageWrapper = styled.div`
     width: 100vw;
     height: 100dvh;
-`;
 
-const MypageBodyWrapper = styled.div`
-    width: 100%;
-    height: 100%;
     background-color: rgb(245, 245, 247);
 `;
+
+const MypageBodyWrapper = styled.div``;
 
 const MypageBoxWrapper = styled.div`
     display: flex;
@@ -164,7 +162,7 @@ const ToggleBoxContainer = styled.div`
 
 const ToggleExpertBox = styled.div`
     width: 30rem;
-    height: 30rem;
+    height: 25rem;
 
     display: flex;
     flex-direction: column;
