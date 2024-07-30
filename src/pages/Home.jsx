@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import Dropdown from "../components/common/Dropdown";
 import Calendar from "../components/common/Calendar";
 
+// 제조사 및 모델 데이터
+const models = {
+    현대: ["펠리세이드", "아반떼", "쏘나타", "그랜저", "아이오닉"],
+    기아: ["레이", "모닝", "스포티지", "셀토스", "K5", "K7"],
+    르노삼성: ["QM6", "SM6", "XM3", "마스터", "트위지"],
+};
+
+// 검수 장소 데이터
+const locations = ["서울", "경기도", "강원도", "충청도", "전라도", "경상도"];
+
 function Home() {
     const navigate = useNavigate();
+
+    const [manufacturer, setManufacturer] = useState("");
+    const [model, setModel] = useState("");
+    const [location, setLocation] = useState("");
+
+    const handleManufacturerChange = (e) => {
+        const selectedManufacturer = e.target.value;
+        setManufacturer(selectedManufacturer);
+        setModel(""); // 제조사 변경 시 모델 초기화
+    };
+
+    const handleModelChange = (e) => {
+        setModel(e.target.value);
+    };
+
+    const handleLocationChange = (e) => {
+        setLocation(e.target.value);
+    };
 
     const handleClickFindButton = () => {
         navigate("/expert-list");
@@ -15,6 +43,7 @@ function Home() {
     const handleClickLoginButton = () => {
         navigate("/login");
     };
+
     return (
         <HomePageWrapper>
             <Header />
@@ -22,19 +51,34 @@ function Home() {
                 <SelectBoxWrapper>
                     <LeftBox>제조사</LeftBox>
                     <RightBox>
-                        <Dropdown />
+                        <Dropdown
+                            type="manufacturer"
+                            value={manufacturer}
+                            onChange={handleManufacturerChange}
+                            options={Object.keys(models)}
+                        />
                     </RightBox>
                 </SelectBoxWrapper>
                 <SelectBoxWrapper>
                     <LeftBox>모델</LeftBox>
                     <RightBox>
-                        <Dropdown />
+                        <Dropdown
+                            type="model"
+                            value={model}
+                            onChange={handleModelChange}
+                            options={manufacturer ? models[manufacturer] : []}
+                        />
                     </RightBox>
                 </SelectBoxWrapper>
                 <SelectBoxWrapper>
                     <LeftBox>검수 장소</LeftBox>
                     <RightBox>
-                        <Dropdown />
+                        <Dropdown
+                            type="location"
+                            value={location}
+                            onChange={handleLocationChange}
+                            options={locations}
+                        />
                     </RightBox>
                 </SelectBoxWrapper>
                 <SelectBoxWrapper>
@@ -98,6 +142,7 @@ const ButtonWrapper = styled.div`
     align-items: center;
     margin-top: 5rem;
 `;
+
 const FindButton = styled.button`
     width: 100%;
     height: 6rem;
