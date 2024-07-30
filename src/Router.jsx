@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import ExpertMypage from "./pages/ExpertMypage";
 import UserMypage from "./pages/UserMypage";
 import SignUpUsage from "./components/SignUp/SignUpUsage";
+import SignUpExpert from "./components/SignUp/SignUpExpert";
 import SignUp1 from "./components/SignUp/SignUp1";
 import SignUp2 from "./components/SignUp/SignUp2";
 import SignUpDone from "./components/SignUp/SignUpDone";
@@ -22,6 +23,7 @@ function Router() {
                 <Route path="/user-my-page" element={<UserMypage />} />
                 <Route path="/expert-my-page" element={<ExpertMypage />} />
                 <Route path="/sign-up-usage" element={<SignUpUsage />} />
+                <Route path="/sign-up-expert" element={<SignUpExpert />} />
                 <Route path="/sign-up-1" element={<SignUp1 />} />
                 <Route path="/sign-up-2" element={<SignUp2 />} />
                 <Route path="/sign-up-done" element={<SignUpDone />} />
