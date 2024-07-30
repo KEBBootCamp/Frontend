@@ -21,9 +21,8 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 홍길동</ExpertRightBoxName>
+                        <ExpertYear>경력 : 3년</ExpertYear>
                         <ExpertMainCarFactory>주력 제조사 : 폭스바겐</ExpertMainCarFactory>
-
-                        <ExpertRightBoxIntro>현장에서 모든 걸 보여드립니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <ExpertListBoxWrapper>
@@ -32,9 +31,8 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 뽀로로</ExpertRightBoxName>
+                        <ExpertYear>경력 : 1년</ExpertYear>
                         <ExpertMainCarFactory>주력 제조사 : BMW</ExpertMainCarFactory>
-
-                        <ExpertRightBoxIntro>편하게 연락주십쇼!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <ExpertListBoxWrapper>
@@ -43,9 +41,8 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 훌랄라</ExpertRightBoxName>
+                        <ExpertYear>경력 : 3년</ExpertYear>
                         <ExpertMainCarFactory>주력 제조사 : 볼보</ExpertMainCarFactory>
-
-                        <ExpertRightBoxIntro>언제든지 문의 환영합니다!</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <ExpertListBoxWrapper onClick={handleClickExpertButton}>
@@ -54,9 +51,8 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 케로로</ExpertRightBoxName>
+                        <ExpertYear>경력 : 4년</ExpertYear>
                         <ExpertMainCarFactory>주력 제조사 : 기아</ExpertMainCarFactory>
-
-                        <ExpertRightBoxIntro>믿어주세요</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
                 <ExpertListBoxWrapper>
@@ -65,9 +61,8 @@ function ExpertList() {
                     </ExpertLeftBox>
                     <ExpertRightBox>
                         <ExpertRightBoxName>이름 : 꺄르르</ExpertRightBoxName>
+                        <ExpertYear>경력 : 7년</ExpertYear>
                         <ExpertMainCarFactory>주력 제조사 : 르노삼성</ExpertMainCarFactory>
-
-                        <ExpertRightBoxIntro>문의 환영</ExpertRightBoxIntro>
                     </ExpertRightBox>
                 </ExpertListBoxWrapper>
             </ExpertBodyWrapper>
@@ -139,28 +134,6 @@ const ExpertMainCarFactory = styled.div`
     width: 20rem;
 `;
 
-const ExpertRightBoxIntro = styled.div`
+const ExpertYear = styled.div`
     width: 20rem;
-`;
-
-const MatchingBtnWrapper = styled.div`
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5rem;
-`;
-
-const MatchingBtn = styled.button`
-    width: 100%;
-    height: 6rem;
-
-    font-size: 1.8rem;
-
-    border-radius: 1rem;
-    background-color: #4784ff;
-    color: white;
-
-    cursor: pointer;
 `;
