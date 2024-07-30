@@ -100,47 +100,56 @@ export default Home;
 
 const HomePageWrapper = styled.div`
     width: 100vw;
-    height: 100dvh;
+    height: 100vh;
     padding: 2rem;
-`;
-
-const SelectBodyWrapper = styled.div`
-    border-radius: 5px;
-    margin-top: 2rem;
-`;
-
-const SelectBoxWrapper = styled.div`
-    width: 100%;
-    height: 10rem;
-
-    display: flex;
-
-    font-size: 2rem;
-    background-color: rgb(245, 245, 247);
-`;
-
-const LeftBox = styled.div`
-    width: 10rem;
-
+    background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+`;
 
-    background-color: #bcbcbc;
+const SelectBodyWrapper = styled.div`
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+`;
+
+const SelectBoxWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    padding: 1rem;
+    /* background-color: #f1f1f1; */
+    border-radius: 5px;
+`;
+
+const LeftBox = styled.div`
+    flex: 1;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #333;
 `;
 
 const RightBox = styled.div`
-    width: calc(100% - 10rem);
+    flex: 2;
 `;
 
 const ButtonWrapper = styled.div`
     width: 100%;
+    max-width: 600px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5rem;
+    margin-top: 2rem;
 `;
 
 const FindButton = styled.button`
