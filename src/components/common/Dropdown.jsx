@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 
-function Dropdown({ text }) {
-    const [option, setOption] = useState("");
+// 제조사 및 모델 데이터
+const models = {
+    현대: ["싼타페", "쏘나타", "투싼"],
+    기아: ["쏘렌토", "모하비", "K5"],
+    르노삼성: ["QM6", "SM6", "XM3"],
+};
 
-    const handleOnChange = (e) => {
-        console.log("변경된 값: ", e.target.value);
-        setOption(e.target.value);
-    };
+// 검수 장소 데이터
+const locations = ["서울", "경기도", "강원도", "충청도", "전라도", "경상도"];
 
+function Dropdown({ type, value, onChange, options }) {
     return (
         <DropdownWrapper>
-            <DropdownBox>
-                <select value={option} onChange={handleOnChange}>
-                    <option key={"현대"}>현대</option>
-                    <option key={"기아"}>기아</option>
-                    <option key={"르노삼성"}>르노삼성</option>
+            <SelectBox>
+                <select value={value} onChange={onChange}>
+                    <option value="">선택</option>
+                    {options.map((option) => (
+                        <option key={option} value={option}>
+                            {option}
+                        </option>
+                    ))}
                 </select>
-            </DropdownBox>
+            </SelectBox>
         </DropdownWrapper>
     );
 }
@@ -25,7 +31,14 @@ function Dropdown({ text }) {
 export default Dropdown;
 
 const DropdownWrapper = styled.div`
-    width: calc(100% - 10rem);
+    display: flex;
 `;
 
-const DropdownBox = styled.div``;
+const SelectBox = styled.div`
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 0.5rem;
+`;
