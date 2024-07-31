@@ -6,7 +6,7 @@ import MypageHeader from "../components/common/MypageHeader";
 function UserMypage() {
     return (
         <MypageWrapper>
-            <MypageHeader />
+            <MypageHeader title="마이페이지" />
             <MypageBodyWrapper>
                 <MypageBoxWrapper>
                     <MypageLeftBox>
@@ -23,22 +23,20 @@ function UserMypage() {
                 <MyInfoFixBox>
                     <MyInfoFix>나의 신청 내역</MyInfoFix>
                 </MyInfoFixBox>
-                <ApplyBoxContainer>
-                    <ApplyUserBox>
-                        <UserCarDetailWrapper>
-                            <UserCarDetail>
-                                <UserCarManufacturer>차종 : 기아</UserCarManufacturer>
-                                <UserCarModel>스포티지</UserCarModel>
-                            </UserCarDetail>
-                            <UserCarLocation>검수 장소 : 서울</UserCarLocation>
-                            <ExpertDetail>
-                                <ExpertName>동행 전문가 : 홍길동</ExpertName>
-                                <StyledIcPhoneCall />
-                            </ExpertDetail>
-                            <UserCarDate>검수 일정 : 2024-08-05</UserCarDate>
-                        </UserCarDetailWrapper>
-                    </ApplyUserBox>
-                </ApplyBoxContainer>
+                <MatchingHistoryList>
+                    <MatchingCarDetailWrapper>
+                        <MatchingExpertInfo>
+                            <MatchingExpert>동행 전문가 : 홍길동</MatchingExpert>
+                            <StyledIcPhoneCall />
+                        </MatchingExpertInfo>
+                        <CarDetail>
+                            <MatchingCarManufacturer>차종: 기아</MatchingCarManufacturer>
+                            <MatchingCarModel>스포티지</MatchingCarModel>
+                        </CarDetail>
+                        <MatchingCarLocation>검수 장소: 서울</MatchingCarLocation>
+                        <MatchingCarDate>검수 일정: 2024-08-05</MatchingCarDate>
+                    </MatchingCarDetailWrapper>
+                </MatchingHistoryList>
             </MypageBodyWrapper>
         </MypageWrapper>
     );
@@ -71,8 +69,6 @@ const MypageLeftBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    /* background-color: #bcbcbc; */
 `;
 
 const StyledIcUser = styled(IcUser)`
@@ -110,8 +106,6 @@ const LogoutButton = styled.button`
     height: 3rem;
     border-radius: 0.7rem;
 
-    font-size: 1.5rem;
-
     margin-left: 2rem;
     background-color: rgb(4, 41, 63);
     color: white;
@@ -122,7 +116,7 @@ const MyInfoFixBox = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    padding: 1.3rem;
+    padding: 1rem;
     margin-top: 1.2rem;
     /* border-bottom: 0.6rem solid rgb(231, 231, 231); */
 `;
@@ -134,50 +128,53 @@ const MyInfoFix = styled.div`
     margin-left: 1rem;
 `;
 
-const ApplyBoxContainer = styled.div`
-    display: flex;
-    justify-content: center;
+const MatchingHistoryList = styled.div`
+    width: 100%;
 
-    border-radius: 1rem;
+    padding: 2rem;
 `;
 
-const ApplyUserBox = styled.div`
-    width: 33rem;
-    height: 25rem;
-
-    padding: 1.3rem;
-    margin-top: 1.5rem;
-
-    font-size: 2rem;
-    background-color: white;
-`;
-
-const UserCarDetail = styled.div`
-    display: flex;
-    column-gap: 1rem;
-`;
-
-const UserCarDetailWrapper = styled.div`
+const MatchingCarDetailWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 
-    justify-content: center;
-    gap: 2rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background-color: ${({ isRejected }) => (isRejected ? "transparent" : "white")};
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
-const UserCarManufacturer = styled.div``;
-const UserCarModel = styled.div``;
-const UserCarLocation = styled.div``;
-const UserCarDate = styled.div``;
 
-const ExpertDetail = styled.div`
+const CarDetail = styled.div`
+    display: flex;
+    gap: 1rem;
+
+    font-size: 1.8rem;
+    font-weight: bold;
+`;
+
+const MatchingCarManufacturer = styled.div``;
+const MatchingCarModel = styled.div``;
+const MatchingCarLocation = styled.div`
+    font-size: 1.8rem;
+    color: #555;
+`;
+const MatchingCarDate = styled.div`
+    font-size: 1.8rem;
+    color: #555;
+`;
+
+const MatchingExpertInfo = styled.div`
     display: flex;
     align-items: center;
     column-gap: 1rem;
 `;
 
-const ExpertName = styled.div``;
+const MatchingExpert = styled.div`
+    font-size: 1.8rem;
+`;
 
 const StyledIcPhoneCall = styled(IcPhoneCall)`
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2rem;
+    height: 2rem;
 `;
