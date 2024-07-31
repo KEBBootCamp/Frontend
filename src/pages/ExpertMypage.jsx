@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { IcUser } from "../assets/svg/icon";
+import { IcUser, IcNext } from "../assets/svg/icon";
 import MypageHeader from "../components/common/MypageHeader";
+import { useNavigate } from "react-router-dom";
 
 function ExpertMypage() {
+    const navigate = useNavigate();
+
+    const handleClickMyMatchingHistory = () => {
+        navigate("/expert-my-matching-history");
+    };
+    const handleClickMyInfoFix = () => {
+        navigate("/expert-my-info-fix");
+    };
     return (
         <MypageWrapper>
-            <MypageHeader />
+            <MypageHeader title="마이페이지" />
             <MypageBodyWrapper>
                 <MypageBoxWrapper>
                     <MypageLeftBox>
@@ -21,26 +30,18 @@ function ExpertMypage() {
                     </MypageRightBox>
                 </MypageBoxWrapper>
                 <MyInfoFixBox>
-                    <MyInfoFix>내 정보 수정</MyInfoFix>
-                    <FixDoneButton>저장하기</FixDoneButton>
+                    <MyMatchingBox>나의 서비스</MyMatchingBox>
                 </MyInfoFixBox>
-
-                <ToggleBoxContainer>
-                    <ToggleExpertBox>
-                        <ExpertWrapper>
-                            <ExpertText>경력</ExpertText>
-                            <ExpertCareer type="text" placeholder="00년" />
-                        </ExpertWrapper>
-                        <ExpertWrapper>
-                            <ExpertText>연락처</ExpertText>
-                            <ExpertPhoneNum type="text" placeholder="010-0000-0000" />
-                        </ExpertWrapper>
-                        <ExpertWrapper>
-                            <ExpertText>한 줄 소개</ExpertText>
-                            <ExpertIntro type="text" placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!" />
-                        </ExpertWrapper>
-                    </ToggleExpertBox>
-                </ToggleBoxContainer>
+                <MyListWrapper>
+                    <MyListBoxWrapper onClick={handleClickMyMatchingHistory}>
+                        <MyListBox>나의 매칭 내역</MyListBox>
+                        <StyledIcNext />
+                    </MyListBoxWrapper>
+                    <MyListBoxWrapper onClick={handleClickMyInfoFix}>
+                        <MyListBox>내 정보 수정</MyListBox>
+                        <StyledIcNext />
+                    </MyListBoxWrapper>
+                </MyListWrapper>
             </MypageBodyWrapper>
         </MypageWrapper>
     );
@@ -126,78 +127,39 @@ const MyInfoFixBox = styled.div`
 
     padding: 1.3rem;
 
-    border-bottom: 0.6rem solid rgb(231, 231, 231);
+    //border-bottom: 0.6rem solid rgb(231, 231, 231);
 `;
 
-const MyInfoFix = styled.div`
+const MyMatchingBox = styled.div`
     color: rgb(188, 188, 188);
 
     font-size: 1.5rem;
-
     margin-left: 1rem;
 `;
 
-const FixDoneButton = styled.button`
-    width: 8rem;
-    height: 3rem;
-
-    border-radius: 0.7rem;
-    font-size: 1.5rem;
-
-    margin-right: 3rem;
-    background-color: rgb(4, 41, 63);
-    color: white;
-`;
-const ToggleBoxContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-
-    border-radius: 1rem;
-
-    background-color: rgb(245, 245, 247);
+const MyListWrapper = styled.div`
+    padding: 1.3rem;
+    margin-left: 1rem;
 `;
 
-const ToggleExpertBox = styled.div`
-    width: 30rem;
-    height: 25rem;
+const MyListBoxWrapper = styled.div`
+    width: 100%;
+    height: 3.2rem;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-
-    border-radius: 1rem;
-
-    padding: 0 2rem;
-    margin-top: 2rem;
-
-    font-size: 2rem;
-    background-color: white;
-`;
-
-const ExpertWrapper = styled.div`
-    height: 4.5rem;
-
-    display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+
+    margin: 0.525rem 0px;
+    cursor: pointer;
+`;
+const MyListBox = styled.div`
+    font-size: 1.7rem;
 `;
 
-const ExpertText = styled.div``;
+const StyledIcNext = styled(IcNext)`
+    width: 1.6rem;
+    height: 1.6rem;
 
-const ExpertCareer = styled.input`
-    width: 11rem;
-    height: 2rem;
-`;
-
-const ExpertPhoneNum = styled.input`
-    width: 11rem;
-    height: 2rem;
-`;
-
-const ExpertIntro = styled.textarea`
-    height: 5rem;
+    margin-right: 1rem;
 `;
