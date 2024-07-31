@@ -101,11 +101,13 @@ export default Home;
 const HomePageWrapper = styled.div`
     width: 100vw;
     height: 100vh;
-    padding: 2rem;
-    background: white;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    padding: 2rem;
+    background: white;
 `;
 
 const SelectBodyWrapper = styled.div`
@@ -117,7 +119,7 @@ const SelectBodyWrapper = styled.div`
 
     margin-top: 2rem;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 1rem;
     background-color: #f9f9f9;
 `;
 
@@ -128,7 +130,6 @@ const SelectBoxWrapper = styled.div`
 
     padding: 1rem;
     /* background-color: #f1f1f1; */
-    border-radius: 5px;
 `;
 
 const LeftBox = styled.div`
@@ -144,11 +145,11 @@ const RightBox = styled.div`
 
 const ButtonWrapper = styled.div`
     width: 100%;
-    max-width: 600px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+
     margin-top: 2rem;
 `;
 
@@ -173,5 +174,6 @@ const LoginBox = styled.button`
     text-decoration: underline;
     line-height: 150%;
 
+    margin-top: 0.5rem;
     cursor: pointer;
 `;
