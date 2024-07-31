@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { IcUser } from "../assets/svg/icon";
+import { IcPhoneCall, IcUser } from "../assets/svg/icon";
 import MypageHeader from "../components/common/MypageHeader";
 
 function UserMypage() {
@@ -13,34 +13,32 @@ function UserMypage() {
                         <StyledIcUser />
                     </MypageLeftBox>
                     <MypageRightBox>
-                        <MypageRightBoxName>홍길동</MypageRightBoxName>
+                        <MypageRightBoxName>뽀로로</MypageRightBoxName>
                         <MypageRightBoxJob>
-                            전문가
+                            사용자
                             <LogoutButton>로그아웃</LogoutButton>
                         </MypageRightBoxJob>
                     </MypageRightBox>
                 </MypageBoxWrapper>
                 <MyInfoFixBox>
-                    <MyInfoFix>내 차 정보 수정</MyInfoFix>
-                    <FixDoneButton>저장하기</FixDoneButton>
+                    <MyInfoFix>나의 신청 내역</MyInfoFix>
                 </MyInfoFixBox>
-
-                <ToggleBoxContainer>
-                    <ToggleExpertBox>
-                        <UserWrapper>
-                            <UserText>제조사</UserText>
-                            <UserCarFactory type="text" placeholder="현대" />
-                        </UserWrapper>
-                        <UserWrapper>
-                            <UserText>모델</UserText>
-                            <UserCarModel type="text" placeholder="제네시스" />
-                        </UserWrapper>
-                        <UserWrapper>
-                            <UserText>검수 장소</UserText>
-                            <UserCarPlace type="text" placeholder="서울시 강남구" />
-                        </UserWrapper>
-                    </ToggleExpertBox>
-                </ToggleBoxContainer>
+                <ApplyBoxContainer>
+                    <ApplyUserBox>
+                        <UserCarDetailWrapper>
+                            <UserCarDetail>
+                                <UserCarManufacturer>차종 : 기아</UserCarManufacturer>
+                                <UserCarModel>스포티지</UserCarModel>
+                            </UserCarDetail>
+                            <UserCarLocation>검수 장소 : 서울</UserCarLocation>
+                            <ExpertDetail>
+                                <ExpertName>동행 전문가 : 홍길동</ExpertName>
+                                <StyledIcPhoneCall />
+                            </ExpertDetail>
+                            <UserCarDate>검수 일정 : 2024-08-05</UserCarDate>
+                        </UserCarDetailWrapper>
+                    </ApplyUserBox>
+                </ApplyBoxContainer>
             </MypageBodyWrapper>
         </MypageWrapper>
     );
@@ -51,13 +49,11 @@ export default UserMypage;
 const MypageWrapper = styled.div`
     width: 100vw;
     height: 100dvh;
-`;
 
-const MypageBodyWrapper = styled.div`
-    width: 100%;
-    height: 100%;
     background-color: rgb(245, 245, 247);
 `;
+
+const MypageBodyWrapper = styled.div``;
 
 const MypageBoxWrapper = styled.div`
     display: flex;
@@ -127,79 +123,61 @@ const MyInfoFixBox = styled.div`
     align-items: center;
 
     padding: 1.3rem;
-
-    border-bottom: 0.6rem solid rgb(231, 231, 231);
+    margin-top: 1.2rem;
+    /* border-bottom: 0.6rem solid rgb(231, 231, 231); */
 `;
 
 const MyInfoFix = styled.div`
     color: rgb(188, 188, 188);
 
-    font-size: 1.5rem;
-
+    font-size: 1.8rem;
     margin-left: 1rem;
 `;
 
-const FixDoneButton = styled.button`
-    width: 8rem;
-    height: 3rem;
-
-    border-radius: 0.7rem;
-    font-size: 1.5rem;
-
-    margin-right: 3rem;
-    background-color: rgb(4, 41, 63);
-    color: white;
-`;
-const ToggleBoxContainer = styled.div`
+const ApplyBoxContainer = styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 2rem;
 
     border-radius: 1rem;
-
-    background-color: rgb(245, 245, 247);
 `;
 
-const ToggleExpertBox = styled.div`
-    width: 30rem;
-    height: 30rem;
+const ApplyUserBox = styled.div`
+    width: 33rem;
+    height: 25rem;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
-
-    border-radius: 1rem;
-
-    padding: 0 2rem;
-    margin-top: 2rem;
+    padding: 1.3rem;
+    margin-top: 1.5rem;
 
     font-size: 2rem;
     background-color: white;
 `;
 
-const UserWrapper = styled.div`
-    height: 4.5rem;
+const UserCarDetail = styled.div`
+    display: flex;
+    column-gap: 1rem;
+`;
 
+const UserCarDetailWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    gap: 2rem;
+`;
+const UserCarManufacturer = styled.div``;
+const UserCarModel = styled.div``;
+const UserCarLocation = styled.div``;
+const UserCarDate = styled.div``;
+
+const ExpertDetail = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    column-gap: 1rem;
 `;
 
-const UserText = styled.div``;
+const ExpertName = styled.div``;
 
-const UserCarFactory = styled.input`
-    width: 11rem;
-    height: 2rem;
-`;
-
-const UserCarModel = styled.input`
-    width: 11rem;
-    height: 2rem;
-`;
-
-const UserCarPlace = styled.input`
-    width: 11rem;
+const StyledIcPhoneCall = styled(IcPhoneCall)`
+    width: 2.6rem;
+    height: 2.6rem;
 `;
