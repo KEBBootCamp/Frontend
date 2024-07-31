@@ -12,6 +12,8 @@ import SignUp1 from "./components/SignUp/SignUp1";
 import SignUp2 from "./components/SignUp/SignUp2";
 import SignUpDone from "./components/SignUp/SignUpDone";
 import Loading from "./pages/Loading";
+import ExpertMyInfoFix from "./pages/ExpertMyInfoFix";
+import ExpertMyMatchingHistory from "./pages/ExpertMyMatchingHistory";
 
 function Router() {
     return (
@@ -29,6 +31,8 @@ function Router() {
                 <Route path="/sign-up-done" element={<SignUpDone />} />
                 <Route path="/loading" element={<Loading />} />
                 <Route path="/expert-detail" element={<ExpertDetail />} />
+                <Route path="/expert-my-info-fix" element={<ExpertMyInfoFix />} />
+                <Route path="/expert-my-matching-history" element={<ExpertMyMatchingHistory />} />
             </Routes>
         </BrowserRouter>
     );
