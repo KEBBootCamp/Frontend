@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackHeader from "../common/BackHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function SignUp2() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { userType } = location.state || {};
+
     const [isValid, setIsValid] = useState(false);
     const [pwdInput, setPwdInput] = useState("");
     const [pwdCheck, setPwdCheck] = useState("");
 
-    const handleClickBackBtn = () => {
-        navigate("/sign-up-1");
-    };
     const handleClickNextBtn = () => {
         if (isValid) {
-            navigate("/sign-up-done");
+            if (userType === "user") {
+                navigate("/sign-up-done", { state: { userType } });
+            } else {
+                navigate("/sign-up-expert", { state: { userType } });
+            }
         }
     };
 

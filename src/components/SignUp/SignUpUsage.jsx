@@ -11,7 +11,7 @@ function SignUpUsage() {
 
     const handleClickDoneBtn = () => {
         if (isClicked) {
-            navigate("/sign-up-1");
+            navigate("/sign-up-1", { state: { userType: isUserClicked ? "user" : "expert" } });
         }
     };
 

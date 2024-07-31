@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackHeader from "../common/BackHeader";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function SignUp1() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const userType = location.state?.userType;
+
     const [isRight, setIsRight] = useState(false);
     const [name, setName] = useState("");
     const [phoneNum, setPhoneNum] = useState("");
@@ -25,8 +28,10 @@ function SignUp1() {
     }, [name, phoneNum]);
 
     const handleClickNextBtn = () => {
-        if (isRight) {
-            navigate("/sign-up-2");
+        if (userType === "user") {
+            navigate("/sign-up-2", { state: { userType } });
+        } else {
+            navigate("/sign-up-2", { state: { userType } });
         }
     };
 

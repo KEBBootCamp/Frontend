@@ -8,7 +8,7 @@ function SignUpExpert() {
     const navigate = useNavigate();
 
     const handleClickNextBtn = () => {
-        navigate("/sign-up-done");
+        navigate("/sign-up-done", { state: { userType: "expert" } });
     };
 
     return (
@@ -18,24 +18,24 @@ function SignUpExpert() {
                 <SignUpExpertQuestion>
                     <SignUpExpertText>전문가 필수 입력란</SignUpExpertText>
                 </SignUpExpertQuestion>
-                <SelectExpertBox>
-                    <LeftBox>경력</LeftBox>
-                    <RightBox>
-                        <Dropdown />
-                    </RightBox>
-                </SelectExpertBox>
-                <SelectExpertBox>
-                    <LeftBox>주력 제조사</LeftBox>
-                    <RightBox>
-                        <Dropdown />
-                    </RightBox>
-                </SelectExpertBox>
-                <SelectExpertBox>
-                    <LeftBox>한줄소개</LeftBox>
-                    <RightBox>
-                        <ExpertIntro type="text" placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!" />
-                    </RightBox>
-                </SelectExpertBox>
+                <SelectExpertBoxWrapper>
+                    <SelectExpertBox>
+                        <LeftBox>경력</LeftBox>
+                        <RightBox>
+                            <ExpertYear type="text" placeholder="3"></ExpertYear>
+                        </RightBox>
+                    </SelectExpertBox>
+                    <SelectExpertBox>
+                        <LeftBox>주력 제조사</LeftBox>
+                        <RightBox></RightBox>
+                    </SelectExpertBox>
+                    <SelectExpertBox>
+                        <LeftBox>한줄소개</LeftBox>
+                        <RightBox>
+                            <ExpertIntro type="text" placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!" />
+                        </RightBox>
+                    </SelectExpertBox>
+                </SelectExpertBoxWrapper>
                 <SelectNextBtnWrapper>
                     <SelectNextBtn onClick={handleClickNextBtn}>완료</SelectNextBtn>
                 </SelectNextBtnWrapper>
@@ -52,6 +52,11 @@ const SignUpExpertWrapper = styled.div`
     padding: 2rem;
 `;
 
+const SelectExpertBoxWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
 const SignUpExpertQuestion = styled.div`
     font-size: 2rem;
 `;
@@ -99,6 +104,13 @@ const ExpertIntro = styled.textarea`
     height: 5rem;
 `;
 
+const ExpertYear = styled.textarea`
+    width: 3rem;
+    height: 2rem;
+`;
+const ExpertYearText = styled.textarea`
+    height: 2rem;
+`;
 const SelectNextBtnWrapper = styled.div`
     width: 100%;
 
