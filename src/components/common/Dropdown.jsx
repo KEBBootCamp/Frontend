@@ -15,14 +15,14 @@ function Dropdown({ type, value, onChange, options }) {
     return (
         <DropdownWrapper>
             <SelectBox>
-                <select value={value} onChange={onChange}>
-                    <option value="">선택</option>
+                <StyledSelect value={value} onChange={onChange}>
+                    <option value="">선택하세요</option>
                     {options.map((option) => (
                         <option key={option} value={option}>
                             {option}
                         </option>
                     ))}
-                </select>
+                </StyledSelect>
             </SelectBox>
         </DropdownWrapper>
     );
@@ -32,13 +32,27 @@ export default Dropdown;
 
 const DropdownWrapper = styled.div`
     display: flex;
+    justify-content: center;
+
+    margin: 1rem 0;
 `;
 
 const SelectBox = styled.div`
     flex: 1;
-
-    display: flex;
-    justify-content: center;
+    max-width: 12rem;
 
     padding: 0.5rem;
+`;
+
+const StyledSelect = styled.select`
+    width: 100%;
+
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    color: #333;
+    font-size: 1.3rem;
+
+    cursor: pointer;
 `;
