@@ -4,7 +4,7 @@ import BackHeader from "../common/BackHeader";
 import { IcHome } from "../../assets/svg/icon";
 import { useNavigate } from "react-router-dom";
 
-function MypageHeader() {
+function MypageHeader({ title }) {
     const navigate = useNavigate();
 
     const handleClickHomeBtn = () => {
@@ -14,7 +14,7 @@ function MypageHeader() {
         <MypageHeaderWrapper>
             <BackHeader />
             <MypageHeaderBox>
-                <MypageHeaderText>마이페이지</MypageHeaderText>
+                <MypageHeaderText>{title}</MypageHeaderText>
                 <HomepageBtn onClick={handleClickHomeBtn}>
                     <StyledIcHome />
                 </HomepageBtn>
@@ -38,20 +38,22 @@ const MypageHeaderBox = styled.div`
 
     display: flex;
     align-items: center;
-    column-gap: 10rem;
+    justify-content: space-between;
 
-    margin-right: 2rem;
+    margin-left: 13rem;
     font-size: 2rem;
 `;
 
 const MypageHeaderText = styled.div`
-    width: 9rem;
+    width: 10rem;
+    margin-left: 1rem;
 `;
 
 const HomepageBtn = styled.button`
     width: 2.5rem;
     height: 2.5rem;
 
+    margin-right: 3rem;
     cursor: pointer;
 `;
 const StyledIcHome = styled(IcHome)`
