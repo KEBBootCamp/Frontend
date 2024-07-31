@@ -1,13 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { IcChecked } from "../../assets/svg/icon";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function SignUpDone() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { userType } = location.state || {};
 
+    // 사용자 버튼을 누르고 회원가입 -> UserMypage
+    // 전문가 버튼을 누르고 회원가입-> SignUpExpert=> ExpertMypage
     const handleClickDoneBtn = () => {
-        navigate("/my-page");
+        if (userType === "user") {
+            navigate("/user-my-page");
+        } else {
+            navigate("/expert-my-page");
+        }
     };
     return (
         <SignUpDoneWrapper>
