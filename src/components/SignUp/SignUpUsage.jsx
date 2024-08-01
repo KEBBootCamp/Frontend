@@ -36,15 +36,15 @@ function SignUpUsage() {
                     <SignUpText>이 앱을 어떤 용도로 사용하시나요?</SignUpText>
                 </SignUpTextWrapper>
                 <UsageBtnWrapper>
-                    <UsageBtn isClicked={isUserClicked} onClick={handleClickUserBtn}>
+                    <UsageBtn $isClicked={isUserClicked} onClick={handleClickUserBtn}>
                         사용자
                     </UsageBtn>
-                    <UsageBtn isClicked={isExpertClicked} onClick={handleClickExpertBtn}>
+                    <UsageBtn $isClicked={isExpertClicked} onClick={handleClickExpertBtn}>
                         전문가
                     </UsageBtn>
                 </UsageBtnWrapper>
                 <SelectDoneBtnWrapper>
-                    <SelectDoneBtn onClick={handleClickDoneBtn} isClicked={isClicked}>
+                    <SelectDoneBtn onClick={handleClickDoneBtn} $isClicked={isClicked}>
                         완료
                     </SelectDoneBtn>
                 </SelectDoneBtnWrapper>
@@ -96,7 +96,7 @@ const UsageBtn = styled.button`
     font-size: 1.6rem;
     font-weight: 500;
 
-    background-color: ${({ isClicked }) => (isClicked ? "rgb(201, 201, 201)" : "rgb(231, 231, 231)")};
+    background-color: ${({ $isClicked }) => ($isClicked ? "rgb(201, 201, 201)" : "rgb(231, 231, 231)")};
 
     color: rgb(4, 41, 63);
 `;
@@ -115,7 +115,7 @@ const SelectDoneBtn = styled.button`
     margin-top: 10rem;
 
     border-radius: 1rem;
-    background-color: ${({ isClicked }) => (isClicked ? "#4784ff" : "#cde9f4")};
+    background-color: ${({ $isClicked }) => ($isClicked ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;

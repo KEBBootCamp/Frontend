@@ -38,7 +38,7 @@ function UserMypage() {
                                 <MatchingExpert>동행 전문가 : 홍길동</MatchingExpert>
                                 <StyledIcPhoneCall onClick={handleClickPhoneCall} />
                             </MatchingExpertBox>
-                            <AcceptORRejectBtn isAccepted={isAccepted}>
+                            <AcceptORRejectBtn $isAccepted={isAccepted}>
                                 {isAccepted ? "수락됨" : "거절됨"}
                             </AcceptORRejectBtn>
                         </MatchingExpertInfo>
@@ -154,7 +154,7 @@ const MatchingCarDetailWrapper = styled.div`
 
     padding: 1.5rem;
     border-radius: 1rem;
-    background-color: ${({ isRejected }) => (isRejected ? "transparent" : "white")};
+    background-color: ${({ $isRejected }) => ($isRejected ? "transparent" : "white")};
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
@@ -198,7 +198,7 @@ const AcceptORRejectBtn = styled.button`
     font-size: 1.5rem;
 
     border-radius: 0.5rem;
-    background-color: ${({ isAccepted }) => (isAccepted ? "#4784ff" : "darkred")};
+    background-color: ${({ $isAccepted }) => ($isAccepted ? "#4784ff" : "darkred")};
     color: white;
     cursor: pointer;
 `;
