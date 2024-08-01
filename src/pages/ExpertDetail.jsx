@@ -63,6 +63,9 @@ const ExpertDetailWrapper = styled.div`
 
 const HeaderWrapper = styled.div`
     display: flex;
+    justify-content: center;
+
+    margin-left: 3.5rem;
 `;
 const BackExpertList = styled.div`
     width: 100%;

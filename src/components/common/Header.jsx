@@ -33,16 +33,14 @@ export default Header;
 
 const HeaderWrapper = styled.div`
     width: 100%;
-
-    /* border: 1px solid; */
 `;
 
 const HeaderBodyWrapper = styled.div`
+    height: 5rem;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    height: 7rem;
 `;
 
 const HeaderLogoButton = styled.button`
@@ -54,7 +52,6 @@ const HeaderLogoButton = styled.button`
 
 const HeaderTitle = styled.div`
     font-family: "ONE-Mobile-POP";
-    /* font-weight: 600; */
     font-size: 3.5rem;
 `;
 

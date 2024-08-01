@@ -109,7 +109,7 @@ const FixDoneButton = styled.button`
     font-size: 1.5rem;
 
     margin-top: 2rem;
-    margin-left: 24rem;
+    margin-left: 25.5rem;
     background-color: rgb(4, 41, 63);
     color: white;
 `;
