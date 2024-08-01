@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Dropdown from "../components/common/Dropdown";
 import MypageHeader from "../components/common/MypageHeader";
 
+const manufacturers = ["현대", "기아", "르노삼성"];
+const years = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
+
 function ExpertMyInfoFix() {
+    const [mainManufacturer, setMainManufacturer] = useState("");
+    const [experience, setExperience] = useState("");
+
+    const handleMainManufacturer = (e) => {
+        setMainManufacturer(e.target.value);
+    };
+
+    const handleExperienceChange = (e) => {
+        setExperience(e.target.value);
+    };
+
     return (
         <ExpertMyInfoFixWrapper>
             <MypageHeader title="내 정보 수정" />
@@ -10,7 +25,12 @@ function ExpertMyInfoFix() {
                 <ToggleExpertBox>
                     <ExpertWrapper>
                         <ExpertText>경력</ExpertText>
-                        <ExpertCareer type="text" placeholder="00년" />
+                        <Dropdown value={experience} onChange={handleExperienceChange} options={years} width="8rem" />
+                        <YearText>년</YearText>
+                    </ExpertWrapper>
+                    <ExpertWrapper>
+                        <ExpertText>주력 제조사</ExpertText>
+                        <Dropdown value={mainManufacturer} onChange={handleMainManufacturer} options={manufacturers} />
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>연락처</ExpertText>
@@ -64,24 +84,23 @@ const ToggleExpertBox = styled.div`
 
 const ExpertWrapper = styled.div`
     display: flex;
-    flex-direction: column;
+    align-items: center;
+
     gap: 1rem;
 `;
 
 const ExpertText = styled.label`
-    font-size: 1.5rem;
-    font-weight: bold;
+    width: 10rem;
+
+    font-size: 1.7rem;
+    /* font-weight: bold; */
 `;
-
-const ExpertCareer = styled.input`
-    padding: 0.5rem;
-
-    font-size: 1.2rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
+const YearText = styled.span`
+    font-size: 1.5rem;
 `;
 
 const ExpertPhoneNum = styled.input`
+    width: 50%;
     padding: 0.5rem;
 
     font-size: 1.2rem;
@@ -90,6 +109,7 @@ const ExpertPhoneNum = styled.input`
 `;
 
 const ExpertIntro = styled.textarea`
+    width: 50%;
     height: 6rem;
 
     padding: 0.5rem;
