@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import BackHeader from "../common/BackHeader";
 import Dropdown from "../common/Dropdown";
 import { useNavigate } from "react-router-dom";
 
+const manufacturers = ["현대", "기아", "르노삼성"];
+const years = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
+
 function SignUpExpert() {
     const navigate = useNavigate();
+    const [mainManufacturer, setMainManufacturer] = useState("");
+    const [experience, setExperience] = useState("");
+
+    const handleMainManufacturer = (e) => {
+        setMainManufacturer(e.target.value);
+    };
+
+    const handleExperienceChange = (e) => {
+        setExperience(e.target.value);
+    };
 
     const handleClickNextBtn = () => {
         navigate("/sign-up-done", { state: { userType: "expert" } });
@@ -22,12 +35,24 @@ function SignUpExpert() {
                     <SelectExpertBox>
                         <LeftBox>경력</LeftBox>
                         <RightBox>
-                            <ExpertYear type="text" placeholder="3"></ExpertYear>
+                            <Dropdown
+                                value={experience}
+                                onChange={handleExperienceChange}
+                                options={years}
+                                width="8rem"
+                            />
+                            <YearText>년</YearText>
                         </RightBox>
                     </SelectExpertBox>
                     <SelectExpertBox>
                         <LeftBox>주력 제조사</LeftBox>
-                        <RightBox></RightBox>
+                        <RightBox>
+                            <Dropdown
+                                value={mainManufacturer}
+                                onChange={handleMainManufacturer}
+                                options={manufacturers}
+                            />
+                        </RightBox>
                     </SelectExpertBox>
                     <SelectExpertBox>
                         <LeftBox>한줄소개</LeftBox>
@@ -43,7 +68,6 @@ function SignUpExpert() {
         </SignUpExpertWrapper>
     );
 }
-
 export default SignUpExpert;
 
 const SignUpExpertWrapper = styled.div`
@@ -104,13 +128,10 @@ const ExpertIntro = styled.textarea`
     height: 5rem;
 `;
 
-const ExpertYear = styled.textarea`
-    width: 3rem;
-    height: 2rem;
+const YearText = styled.span`
+    font-size: 1.5rem;
 `;
-const ExpertYearText = styled.textarea`
-    height: 2rem;
-`;
+
 const SelectNextBtnWrapper = styled.div`
     width: 100%;
 
