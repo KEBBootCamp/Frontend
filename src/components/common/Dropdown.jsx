@@ -1,22 +1,12 @@
 import React from "react";
 import { styled } from "styled-components";
 
-// 제조사 및 모델 데이터
-const models = {
-    현대: ["싼타페", "쏘나타", "투싼"],
-    기아: ["쏘렌토", "모하비", "K5"],
-    르노삼성: ["QM6", "SM6", "XM3"],
-};
-
-// 검수 장소 데이터
-const locations = ["서울", "경기도", "강원도", "충청도", "전라도", "경상도"];
-
-function Dropdown({ type, value, onChange, options }) {
+function Dropdown({ width, value, onChange, options }) {
     return (
-        <DropdownWrapper>
+        <DropdownWrapper width={width}>
             <SelectBox>
                 <StyledSelect value={value} onChange={onChange}>
-                    <option value="">선택하세요</option>
+                    <option value="">선택</option>
                     {options.map((option) => (
                         <option key={option} value={option}>
                             {option}
@@ -35,6 +25,7 @@ const DropdownWrapper = styled.div`
     justify-content: center;
 
     margin: 1rem 0;
+    width: ${(props) => props.width || "auto"};
 `;
 
 const SelectBox = styled.div`
