@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IcPhoneCall, IcUser } from "../assets/svg/icon";
 import MypageHeader from "../components/common/MypageHeader";
+import { useNavigate } from "react-router-dom";
 
 function UserMypage() {
+    const navigate = useNavigate();
+    const [isAccepted, setIsAccepted] = useState(true);
+
+    const handleClickPhoneCall = () => {
+        navigate("/expert-detail");
+    };
+
     return (
         <MypageWrapper>
             <MypageHeader title="마이페이지" />
@@ -26,8 +34,13 @@ function UserMypage() {
                 <MatchingHistoryList>
                     <MatchingCarDetailWrapper>
                         <MatchingExpertInfo>
-                            <MatchingExpert>동행 전문가 : 홍길동</MatchingExpert>
-                            <StyledIcPhoneCall />
+                            <MatchingExpertBox>
+                                <MatchingExpert>동행 전문가 : 홍길동</MatchingExpert>
+                                <StyledIcPhoneCall onClick={handleClickPhoneCall} />
+                            </MatchingExpertBox>
+                            <AcceptORRejectBtn isAccepted={isAccepted}>
+                                {isAccepted ? "수락됨" : "거절됨"}
+                            </AcceptORRejectBtn>
                         </MatchingExpertInfo>
                         <CarDetail>
                             <MatchingCarManufacturer>차종: 기아</MatchingCarManufacturer>
@@ -147,7 +160,7 @@ const MatchingCarDetailWrapper = styled.div`
 
 const CarDetail = styled.div`
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
 
     font-size: 1.8rem;
     font-weight: bold;
@@ -167,9 +180,28 @@ const MatchingCarDate = styled.div`
 const MatchingExpertInfo = styled.div`
     display: flex;
     align-items: center;
-    column-gap: 1rem;
+
+    column-gap: 7rem;
 `;
 
+const MatchingExpertBox = styled.div`
+    width: 25rem;
+
+    display: flex;
+    align-items: center;
+`;
+
+const AcceptORRejectBtn = styled.button`
+    width: 8rem;
+
+    padding: 0.75rem;
+    font-size: 1.5rem;
+
+    border-radius: 0.5rem;
+    background-color: ${({ isAccepted }) => (isAccepted ? "#4784ff" : "darkred")};
+    color: white;
+    cursor: pointer;
+`;
 const MatchingExpert = styled.div`
     font-size: 1.8rem;
 `;
@@ -177,4 +209,6 @@ const MatchingExpert = styled.div`
 const StyledIcPhoneCall = styled(IcPhoneCall)`
     width: 2rem;
     height: 2rem;
+
+    margin-left: 1rem;
 `;
