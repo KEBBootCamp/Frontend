@@ -34,7 +34,7 @@ function ExpertMyMatchingHistory() {
         <ExpertMyMatchingHistoryWrapper>
             <MypageHeader title="매칭 내역" />
             <MatchingHistoryList>
-                <UserCarDetailWrapper isRejected={isRejected}>
+                <UserCarDetailWrapper $isRejected={isRejected}>
                     <UserDetail>
                         <UserCarManufacturer>차종: 기아</UserCarManufacturer>
                         <UserCarModel>스포티지</UserCarModel>
@@ -124,10 +124,6 @@ const AcceptBtn = styled.button`
     background-color: #4784ff;
     color: white;
     cursor: pointer;
-
-    &:hover {
-        background-color: #356ae6;
-    }
 `;
 
 const RejectBtn = styled.button`
@@ -140,10 +136,6 @@ const RejectBtn = styled.button`
     background-color: red;
     color: white;
     cursor: pointer;
-
-    &:hover {
-        background-color: darkred;
-    }
 `;
 
 const CompleteBtn = styled.button`
@@ -156,8 +148,4 @@ const CompleteBtn = styled.button`
     background-color: green;
     color: white;
     cursor: pointer;
-
-    &:hover {
-        background-color: darkgreen;
-    }
 `;

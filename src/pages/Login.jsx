@@ -51,7 +51,7 @@ function Login() {
                 </LoginBoxContainer>
             </BoxContainer>
             <LoginContainer>
-                <LoginButton onClick={handleClickLoginButton} isSatisfied={isSatisfied}>
+                <LoginButton onClick={handleClickLoginButton} $isSatisfied={isSatisfied}>
                     로그인
                 </LoginButton>
                 <NotMember onClick={handleClickNotMemberButton}>회원이 아닙니다.</NotMember>
@@ -69,6 +69,7 @@ const LoginWrapper = styled.div`
 `;
 
 const BoxContainer = styled.div`
+    width: 100%;
     height: 30rem;
 
     display: flex;
@@ -80,12 +81,12 @@ const BoxContainer = styled.div`
     border-radius: 1rem;
     margin-top: 3rem;
 
-    background-color: rgb(245, 245, 247);
+    //background-color: rgb(245, 245, 247);
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
 const LoginTextWrapper = styled.div`
-    width: 70%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -144,9 +145,8 @@ const LoginButton = styled.button`
     margin-top: 4rem;
 
     border-radius: 1rem;
-    background-color: ${({ isSatisfied }) => (isSatisfied ? "#4784ff" : "#cde9f4")};
+    background-color: ${({ $isSatisfied }) => ($isSatisfied ? "#4784ff" : "#cde9f4")};
     color: white;
-    cursor: ${({ isSatisfied }) => (isSatisfied ? "pointer" : "not-allowed")};
 `;
 
 const NotMember = styled.button`
@@ -156,5 +156,6 @@ const NotMember = styled.button`
     text-decoration: underline;
     line-height: 150%;
 
+    margin-top: 0.5rem;
     cursor: pointer;
 `;
