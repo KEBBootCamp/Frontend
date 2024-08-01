@@ -8,11 +8,11 @@ function SignUpDone() {
     const location = useLocation();
     const { userType } = location.state || {};
 
-    // 사용자 버튼을 누르고 회원가입 -> UserMypage
+    // 사용자 버튼을 누르고 회원가입 -> home페이지
     // 전문가 버튼을 누르고 회원가입-> SignUpExpert=> ExpertMypage
     const handleClickDoneBtn = () => {
         if (userType === "user") {
-            navigate("/user-my-page");
+            navigate("/");
         } else {
             navigate("/expert-my-page");
         }
