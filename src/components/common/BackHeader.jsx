@@ -24,9 +24,7 @@ function BackHeader() {
 
 export default BackHeader;
 
-const BackHeaderWrapper = styled.div`
-    width: 80%;
-`;
+const BackHeaderWrapper = styled.div``;
 
 const BackHeaderBodyWrapper = styled.div`
     width: 30%;
