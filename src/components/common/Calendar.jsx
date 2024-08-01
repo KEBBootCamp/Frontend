@@ -14,7 +14,9 @@ const Calendar = () => {
         <DatePickerWrapper>
             <DatePickerContainer>
                 <DatePicker
-                    dateFormat="yyyy-MM-dd" // 날짜 형태
+                    dateFormat="yyyy-MM-dd hh:mm" // 날짜 형태
+                    value={selectedDate}
+                    showTimeSelect
                     locale={ko}
                     selected={selectedDate}
                     onChange={(date) => setSelectedDate(date)}
@@ -22,7 +24,7 @@ const Calendar = () => {
                     shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
                     // className={styles.datePicker}
                 />
-                <StyledCalendar />
+                {/* <StyledCalendar /> */}
             </DatePickerContainer>
         </DatePickerWrapper>
     );
@@ -31,22 +33,21 @@ const Calendar = () => {
 export default Calendar;
 
 const DatePickerWrapper = styled.div`
+    width: 100%;
+
     display: flex;
-    align-items: center;
     justify-content: center;
 
-    background-color: white;
-    color: white;
+    padding: 1rem;
     cursor: pointer;
-
-    padding: 2rem;
 `;
 
 const DatePickerContainer = styled.div`
-    display: flex;
-    /* width: 100%; */
-    padding: 0.5rem 1rem;
-    border: 1px solid black;
+    width: 15rem;
+
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px solid #ccc;
 `;
 
 const StyledCalendar = styled(IcCalendar)`

@@ -1,12 +1,10 @@
 .react-datepicker-wrapper input[type="text"] {
-    width: 100%;
+    width: 12rem;
     border: none;
-}
-
-.react-datepicker__input-container {
-    width: 90%;
+    /* background-color: #f9f9f9; */
 }
 
 .react-datepicker-wrapper {
-    width: 10rem;
+    width: 11rem;
+    padding: 0;
 }
