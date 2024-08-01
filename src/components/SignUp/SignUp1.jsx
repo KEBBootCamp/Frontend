@@ -15,12 +15,28 @@ function SignUp1() {
     const userName = (e) => {
         setName(e.target.value);
     };
+
+    const formatPhoneNum = (value) => {
+        if (!value) {
+            return value;
+        }
+        // 전화번호 입력(number_ex. 01011112222) 시 010-1111-2222 로 포맷팅하는 로직
+        const phoneNum = value.replace(/[^\d]/g, "");
+        const phoneNumLength = phoneNum.length;
+        if (phoneNumLength < 4) return phoneNum;
+        if (phoneNumLength < 8) {
+            return `${phoneNum.slice(0, 3)}-${phoneNum.slice(3)}`;
+        }
+        return `${phoneNum.slice(0, 3)}-${phoneNum.slice(3, 7)}-${phoneNum.slice(7, 11)}`;
+    };
+
     const userPhoneNum = (e) => {
-        setPhoneNum(e.target.value);
+        const formattedPhoneNum = formatPhoneNum(e.target.value);
+        setPhoneNum(formattedPhoneNum);
     };
 
     useEffect(() => {
-        if (name.length < 5 && phoneNum.length >= 10) {
+        if (name.length >= 2 && phoneNum.replace(/[^0-9]/g, "").length === 11) {
             setIsRight(true);
         } else {
             setIsRight(false);
@@ -28,9 +44,7 @@ function SignUp1() {
     }, [name, phoneNum]);
 
     const handleClickNextBtn = () => {
-        if (userType === "user") {
-            navigate("/sign-up-2", { state: { userType } });
-        } else {
+        if (isRight) {
             navigate("/sign-up-2", { state: { userType } });
         }
     };

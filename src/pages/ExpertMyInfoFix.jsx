@@ -5,12 +5,14 @@ import MypageHeader from "../components/common/MypageHeader";
 import { useNavigate } from "react-router-dom";
 
 const manufacturers = ["현대", "기아", "르노삼성"];
+// 1 ~ 30 (년)까지의 경력 선택 가능
 const years = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
 
 function ExpertMyInfoFix() {
     const navigate = useNavigate();
     const [mainManufacturer, setMainManufacturer] = useState("");
     const [experience, setExperience] = useState("");
+    const [phoneNum, setPhoneNum] = useState("");
 
     const handleMainManufacturer = (e) => {
         setMainManufacturer(e.target.value);
@@ -22,6 +24,25 @@ function ExpertMyInfoFix() {
 
     const handleClickSaveBtn = () => {
         navigate("/expert-my-page");
+    };
+
+    // 전화번호 입력(number_ex. 01011112222) 시 010-1111-2222 로 포맷팅하는 로직
+    const formatPhoneNum = (value) => {
+        if (!value) {
+            return value;
+        }
+        const phoneNum = value.replace(/[^\d]/g, "");
+        const phoneNumLength = phoneNum.length;
+        if (phoneNumLength < 4) return phoneNum;
+        if (phoneNumLength < 8) {
+            return `${phoneNum.slice(0, 3)}-${phoneNum.slice(3)}`;
+        }
+        return `${phoneNum.slice(0, 3)}-${phoneNum.slice(3, 7)}-${phoneNum.slice(7, 11)}`;
+    };
+
+    const handlePhoneNumChange = (e) => {
+        const formattedPhoneNum = formatPhoneNum(e.target.value);
+        setPhoneNum(formattedPhoneNum);
     };
 
     return (
@@ -40,7 +61,12 @@ function ExpertMyInfoFix() {
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>연락처</ExpertText>
-                        <ExpertPhoneNum type="text" placeholder="010-1234-5678" />
+                        <ExpertPhoneNum
+                            type="text"
+                            placeholder="010-1234-5678"
+                            value={phoneNum}
+                            onChange={handlePhoneNumChange}
+                        />
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>한 줄 소개</ExpertText>
