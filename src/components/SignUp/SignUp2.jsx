@@ -57,7 +57,7 @@ function SignUp2() {
                     </TextBoxWrapper>
                 </InputBox>
                 <SelectNextBtnWrapper>
-                    <SelectNextBtn onClick={handleClickNextBtn} isValid={isValid}>
+                    <SelectNextBtn onClick={handleClickNextBtn} $isValid={isValid}>
                         완료
                     </SelectNextBtn>
                 </SelectNextBtnWrapper>
@@ -107,7 +107,7 @@ const SelectNextBtn = styled.button`
     margin-top: 5rem;
 
     border-radius: 1rem;
-    background-color: ${({ isValid }) => (isValid ? "#4784ff" : "#cde9f4")};
+    background-color: ${({ $isValid }) => ($isValid ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;

@@ -51,7 +51,7 @@ function SignUp1() {
                     </TextBoxWrapper>
                 </InputBox>
                 <SelectNextBtnWrapper>
-                    <SelectNextBtn onClick={handleClickNextBtn} isRight={isRight}>
+                    <SelectNextBtn onClick={handleClickNextBtn} $isRight={isRight}>
                         다음
                     </SelectNextBtn>
                 </SelectNextBtnWrapper>
@@ -101,7 +101,7 @@ const SelectNextBtn = styled.button`
     margin-top: 10rem;
 
     border-radius: 1rem;
-    background-color: ${({ isRight }) => (isRight ? "#4784ff" : "#cde9f4")};
+    background-color: ${({ $isRight }) => ($isRight ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;
