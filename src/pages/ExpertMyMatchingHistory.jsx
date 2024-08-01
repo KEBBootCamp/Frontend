@@ -3,10 +3,31 @@ import styled from "styled-components";
 import MypageHeader from "../components/common/MypageHeader";
 
 function ExpertMyMatchingHistory() {
+    const [isAccepted, setIsAccepted] = useState(false);
     const [isRejected, setIsRejected] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(false);
 
+    const handleClickAcceptBtn = () => {
+        if (window.confirm("수락하시겠습니까?")) {
+            alert("수락되었습니다.");
+            setIsAccepted(true);
+        } else {
+            alert("거절되었습니다.");
+        }
+    };
     const handleClickRejectBtn = () => {
-        setIsRejected(true);
+        if (window.confirm("거절하시겠습니까?")) {
+            alert("거절되었습니다.");
+            setIsRejected(true);
+        } else {
+            alert("수락되었습니다.");
+        }
+    };
+    const handleClickCompleteBtn = () => {
+        if (window.confirm("검수 완료하시겠습니까?")) {
+            alert("검수 완료되었습니다.");
+            setIsCompleted(true);
+        }
     };
 
     return (
@@ -20,10 +41,15 @@ function ExpertMyMatchingHistory() {
                     </UserDetail>
                     <UserCarLocation>검수 장소: 서울</UserCarLocation>
                     <UserCarDate>검수 일정: 2024-08-05</UserCarDate>
-
                     <MatchingBtn>
-                        <AcceptBtn>수락</AcceptBtn>
-                        <RejectBtn onClick={handleClickRejectBtn}>거절</RejectBtn>
+                        {isAccepted ? (
+                            <CompleteBtn onClick={handleClickCompleteBtn}>검수 완료</CompleteBtn>
+                        ) : (
+                            <>
+                                <AcceptBtn onClick={handleClickAcceptBtn}>수락</AcceptBtn>
+                                <RejectBtn onClick={handleClickRejectBtn}>거절</RejectBtn>
+                            </>
+                        )}
                     </MatchingBtn>
                 </UserCarDetailWrapper>
             </MatchingHistoryList>
@@ -57,13 +83,13 @@ const UserCarDetailWrapper = styled.div`
 
     padding: 1.5rem;
     border-radius: 1rem;
-    background-color: ${({ isRejected }) => (isRejected ? "transparent" : "white")};
+    background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const UserDetail = styled.div`
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
 
     font-size: 1.5rem;
     font-weight: bold;
@@ -117,5 +143,21 @@ const RejectBtn = styled.button`
 
     &:hover {
         background-color: darkred;
+    }
+`;
+
+const CompleteBtn = styled.button`
+    flex: 1;
+
+    padding: 0.75rem;
+    font-size: 1rem;
+
+    border-radius: 0.5rem;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        background-color: darkgreen;
     }
 `;
