@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "../components/common/Dropdown";
 import MypageHeader from "../components/common/MypageHeader";
+import { useNavigate } from "react-router-dom";
 
 const manufacturers = ["현대", "기아", "르노삼성"];
 const years = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
 
 function ExpertMyInfoFix() {
+    const navigate = useNavigate();
     const [mainManufacturer, setMainManufacturer] = useState("");
     const [experience, setExperience] = useState("");
 
@@ -16,6 +18,10 @@ function ExpertMyInfoFix() {
 
     const handleExperienceChange = (e) => {
         setExperience(e.target.value);
+    };
+
+    const handleClickSaveBtn = () => {
+        navigate("/expert-my-page");
     };
 
     return (
@@ -42,7 +48,7 @@ function ExpertMyInfoFix() {
                     </ExpertWrapper>
                 </ToggleExpertBox>
                 <ExpertMyinfoBox>
-                    <FixDoneButton>저장하기</FixDoneButton>
+                    <FixDoneButton onClick={handleClickSaveBtn}>저장하기</FixDoneButton>
                 </ExpertMyinfoBox>
             </ToggleBoxContainer>
         </ExpertMyInfoFixWrapper>
