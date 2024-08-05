@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import BackHeader from "../common/BackHeader";
 import Dropdown from "../common/Dropdown";
@@ -11,6 +11,8 @@ function SignUpExpert() {
     const navigate = useNavigate();
     const [mainManufacturer, setMainManufacturer] = useState("");
     const [experience, setExperience] = useState("");
+    const [expertIntro, setExpertIntro] = useState("");
+    const [isSatisfied, setIsSatisfied] = useState(false);
 
     const handleMainManufacturer = (e) => {
         setMainManufacturer(e.target.value);
@@ -20,9 +22,24 @@ function SignUpExpert() {
         setExperience(e.target.value);
     };
 
+    const handleExpertIntroChange = (e) => {
+        setExpertIntro(e.target.value);
+    };
+
     const handleClickNextBtn = () => {
         navigate("/sign-up-done", { state: { userType: "expert" } });
     };
+
+    useEffect(() => {
+        const validateBtn = () => {
+            if (mainManufacturer && experience && expertIntro) {
+                setIsSatisfied(true);
+            } else {
+                setIsSatisfied(false);
+            }
+        };
+        validateBtn();
+    }, [mainManufacturer, experience, expertIntro]);
 
     return (
         <SignUpExpertWrapper>
@@ -57,12 +74,19 @@ function SignUpExpert() {
                     <SelectExpertBox>
                         <LeftBox>한줄소개</LeftBox>
                         <RightBox>
-                            <ExpertIntro type="text" placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!" />
+                            <ExpertIntro
+                                type="text"
+                                placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!"
+                                value={expertIntro}
+                                onChange={handleExpertIntroChange}
+                            />
                         </RightBox>
                     </SelectExpertBox>
                 </SelectExpertBoxWrapper>
                 <SelectNextBtnWrapper>
-                    <SelectNextBtn onClick={handleClickNextBtn}>완료</SelectNextBtn>
+                    <SelectNextBtn onClick={handleClickNextBtn} $isSatisfied={isSatisfied}>
+                        완료
+                    </SelectNextBtn>
                 </SelectNextBtnWrapper>
             </SignUpExpertContainer>
         </SignUpExpertWrapper>
@@ -166,7 +190,7 @@ const SelectNextBtn = styled.button`
     font-size: 1.8rem;
 
     border-radius: 1rem;
-    background-color: #4784ff;
+    background-color: ${({ $isSatisfied }) => ($isSatisfied ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;
