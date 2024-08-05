@@ -15,6 +15,7 @@ import Loading from "./pages/Loading";
 import ExpertMyInfoFix from "./pages/ExpertMyInfoFix";
 import ExpertMyMatchingHistory from "./pages/ExpertMyMatchingHistory";
 import LoginPlease from "./pages/LoginPlease";
+import Error from "./pages/Error";
 
 function Router() {
     return (
@@ -35,6 +36,7 @@ function Router() {
                 <Route path="/expert-my-info-fix" element={<ExpertMyInfoFix />} />
                 <Route path="/expert-my-matching-history" element={<ExpertMyMatchingHistory />} />
                 <Route path="/login-please" element={<LoginPlease />} />
+                <Route path="/error" element={<Error />} />
             </Routes>
         </BrowserRouter>
     );
