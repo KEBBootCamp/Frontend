@@ -82,7 +82,7 @@ function Home() {
                     </RightBox>
                 </SelectBoxWrapper>
                 <SelectBoxWrapper>
-                    <LeftBox>검수 날짜</LeftBox>
+                    <LeftBox>검수 일정</LeftBox>
                     <RightBox>
                         <Calendar />
                     </RightBox>
