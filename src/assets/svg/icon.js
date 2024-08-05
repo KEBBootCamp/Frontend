@@ -7,5 +7,6 @@ import IcCalendar from "./ic_calendar.svg?react";
 import IcHome from "./ic_home.svg?react";
 import IcPhoneCall from "./ic_phoneCall.svg?react";
 import IcNext from "./ic_next.svg?react";
+import IcLoginWarning from "./ic_warning.svg?react";
 
-export { Ic24, IcUser, IcMyProfile, IcBack, IcChecked, IcCalendar, IcHome, IcPhoneCall, IcNext };
+export { Ic24, IcUser, IcMyProfile, IcBack, IcChecked, IcCalendar, IcHome, IcPhoneCall, IcNext, IcLoginWarning };
