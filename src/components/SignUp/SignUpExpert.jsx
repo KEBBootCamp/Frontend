@@ -26,11 +26,11 @@ function SignUpExpert() {
 
     return (
         <SignUpExpertWrapper>
-            <BackHeader />
+            <SignUpExpertQuestion>
+                <BackHeader />
+                <SignUpExpertText>전문가 필수 입력란</SignUpExpertText>
+            </SignUpExpertQuestion>
             <SignUpExpertContainer>
-                <SignUpExpertQuestion>
-                    <SignUpExpertText>전문가 필수 입력란</SignUpExpertText>
-                </SignUpExpertQuestion>
                 <SelectExpertBoxWrapper>
                     <SelectExpertBox>
                         <LeftBox>경력</LeftBox>
@@ -74,69 +74,90 @@ const SignUpExpertWrapper = styled.div`
     width: 100vw;
     height: 100dvh;
     padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const SelectExpertBoxWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 3rem;
+
+    border-radius: 1rem;
+    background-color: #f9f9f9;
 `;
+
 const SignUpExpertQuestion = styled.div`
+    display: flex;
+
     font-size: 2rem;
+    font-weight: bold;
+
+    color: #333;
 `;
 
 const SignUpExpertContainer = styled.div`
+    width: 100%;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
+
     gap: 2rem;
 
+    margin-top: 3rem;
     border-radius: 1rem;
 `;
-const SignUpExpertText = styled.div``;
+
+const SignUpExpertText = styled.div`
+    margin-top: 1.3rem;
+`;
 
 const SelectExpertBox = styled.div`
-    width: 100%;
-    height: 10rem;
-
     display: flex;
+    align-items: center;
 
-    font-size: 2rem;
-    background-color: rgb(245, 245, 247);
+    padding: 1rem 1.5rem;
 `;
 
 const LeftBox = styled.div`
-    width: 12rem;
+    width: 10rem;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 
-    background-color: #bcbcbc;
+    font-size: 1.7rem;
 `;
 
 const RightBox = styled.div`
     width: calc(100% - 10rem);
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 `;
 
 const ExpertIntro = styled.textarea`
-    height: 5rem;
+    height: 7rem;
+
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
 `;
 
 const YearText = styled.span`
+    margin-left: 0.5rem;
     font-size: 1.5rem;
 `;
 
 const SelectNextBtnWrapper = styled.div`
     width: 100%;
 
-    margin-top: 3rem;
+    margin-top: 4rem;
 `;
+
 const SelectNextBtn = styled.button`
     width: 100%;
     height: 6rem;
