@@ -14,6 +14,7 @@ import SignUpDone from "./components/SignUp/SignUpDone";
 import Loading from "./pages/Loading";
 import ExpertMyInfoFix from "./pages/ExpertMyInfoFix";
 import ExpertMyMatchingHistory from "./pages/ExpertMyMatchingHistory";
+import LoginPlease from "./pages/LoginPlease";
 
 function Router() {
     return (
@@ -33,6 +34,7 @@ function Router() {
                 <Route path="/expert-detail" element={<ExpertDetail />} />
                 <Route path="/expert-my-info-fix" element={<ExpertMyInfoFix />} />
                 <Route path="/expert-my-matching-history" element={<ExpertMyMatchingHistory />} />
+                <Route path="/login-please" element={<LoginPlease />} />
             </Routes>
         </BrowserRouter>
     );
