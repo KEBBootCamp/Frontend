@@ -50,6 +50,7 @@ const HeaderLogoButton = styled.button`
 `;
 
 const HeaderTitle = styled.div`
+    color: black;
     font-family: "ONE-Mobile-POP";
     font-size: 3.5rem;
 `;

@@ -129,7 +129,6 @@ const SelectBoxWrapper = styled.div`
     text-align: center;
 
     padding: 1rem;
-    /* background-color: #f1f1f1; */
 `;
 
 const LeftBox = styled.div`

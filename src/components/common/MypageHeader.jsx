@@ -46,7 +46,7 @@ const MypageHeaderBox = styled.div`
 
 const MypageHeaderText = styled.div`
     width: 10rem;
-    margin-left: 1rem;
+    margin-left: 2.7rem;
 `;
 
 const HomepageBtn = styled.button`
