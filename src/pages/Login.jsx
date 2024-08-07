@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../components/common/Header";
 import { useNavigate } from "react-router-dom";
+import { api } from "../libs/api";
 
 function Login() {
     const navigate = useNavigate();
@@ -26,7 +27,16 @@ function Login() {
 
     const handleClickLoginButton = () => {
         if (isSatisfied) {
-            navigate("/");
+            console.log("User ID:", id);
+            console.log("Password:", pwd);
+
+            api.post("/users/login", { userId: id, userPwd: pwd })
+                .then((res) => {
+                    navigate("/");
+                })
+                .catch((err) => {
+                    navigate("/login-please");
+                });
         }
     };
 
@@ -81,7 +91,6 @@ const BoxContainer = styled.div`
     border-radius: 1rem;
     margin-top: 3rem;
 
-    //background-color: rgb(245, 245, 247);
     background-color: #f9f9f9;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `;
