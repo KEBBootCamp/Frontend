@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 function SignUp1() {
     const navigate = useNavigate();
     const location = useLocation();
-    const userType = location.state?.userType;
+    const userType = location.state.userType;
 
     const [isRight, setIsRight] = useState(false);
     const [name, setName] = useState("");
@@ -45,7 +45,7 @@ function SignUp1() {
 
     const handleClickNextBtn = () => {
         if (isRight) {
-            navigate("/sign-up-2", { state: { userType } });
+            navigate("/sign-up-2", { state: { userType: userType, name: name, phoneNum: phoneNum } });
         }
     };
 

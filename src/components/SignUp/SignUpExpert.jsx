@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import BackHeader from "../common/BackHeader";
 import Dropdown from "../common/Dropdown";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { api } from "../../libs/api";
 
 const manufacturers = ["현대", "기아", "르노삼성"];
 const years = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
 
 function SignUpExpert() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const signupData = location.state;
+    console.log(signupData);
+
     const [mainManufacturer, setMainManufacturer] = useState("");
     const [experience, setExperience] = useState("");
     const [expertIntro, setExpertIntro] = useState("");
@@ -27,9 +33,37 @@ function SignUpExpert() {
     };
 
     const handleClickNextBtn = () => {
-        navigate("/sign-up-done", { state: { userType: "expert" } });
-    };
+        if (isSatisfied) {
+            if (signupData.userType === "expert") {
+                api.post("/users/expertjoin", {
+                    userId: signupData.idInput,
+                    userPwd: signupData.pwdInput,
+                    userName: signupData.name,
+                    userPhonenumber: signupData.phoneNum,
+                    isExpert: true,
 
+                    engineerCareer: experience,
+                    engineerBrand: mainManufacturer,
+                    engineerProfile: expertIntro,
+                })
+                    .then((res) => {
+                        navigate("/sign-up-done", {
+                            state: {
+                                ...signupData,
+                                experience: experience,
+                                mainManufacturer: mainManufacturer,
+                                expertIntro: expertIntro,
+                            },
+                        });
+                    })
+                    .catch((err) => {
+                        navigate("/error");
+                    });
+            } else {
+                navigate("/sign-up-done");
+            }
+        }
+    };
     useEffect(() => {
         const validateBtn = () => {
             if (mainManufacturer && experience && expertIntro) {

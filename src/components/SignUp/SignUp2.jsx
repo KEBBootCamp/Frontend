@@ -2,24 +2,44 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackHeader from "../common/BackHeader";
 import { useLocation, useNavigate } from "react-router-dom";
+import { api } from "../../libs/api";
 
 function SignUp2() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { userType } = location.state || {};
+    const tempUserData = location.state;
+
+    console.log(tempUserData);
 
     const [isValid, setIsValid] = useState(false);
+    const [idInput, setIdInput] = useState("");
     const [pwdInput, setPwdInput] = useState("");
     const [pwdCheck, setPwdCheck] = useState("");
 
     const handleClickNextBtn = () => {
         if (isValid) {
-            if (userType === "user") {
-                navigate("/sign-up-done", { state: { userType } });
+            if (tempUserData.userType === "user") {
+                api.post("/users/join", {
+                    userId: idInput,
+                    userPwd: pwdInput,
+                    userName: tempUserData.name,
+                    userPhonenumber: tempUserData.phoneNum,
+                    isExpert: false,
+                })
+                    .then((res) => {
+                        navigate("/sign-up-done", { state: { ...tempUserData, idInput: idInput, pwdInput: pwdInput } });
+                    })
+                    .catch((err) => {
+                        navigate("/error");
+                    });
             } else {
-                navigate("/sign-up-expert", { state: { userType } });
+                navigate("/sign-up-expert", { state: { ...tempUserData, idInput: idInput, pwdInput: pwdInput } });
             }
         }
+    };
+
+    const userIdInput = (e) => {
+        setIdInput(e.target.value);
     };
 
     const userPwdInput = (e) => {
@@ -47,7 +67,7 @@ function SignUp2() {
                 </SignUp2Question>
                 <InputBox>
                     <TextBoxWrapper>
-                        <TextBox type="text" placeholder="아이디" />
+                        <TextBox type="text" placeholder="아이디" value={idInput} onChange={userIdInput} />
                     </TextBoxWrapper>
                     <TextBoxWrapper>
                         <TextBox type="password" placeholder="비밀번호" value={pwdInput} onChange={userPwdInput} />
