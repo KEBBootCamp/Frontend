@@ -5,46 +5,39 @@ import { useNavigate } from "react-router-dom";
 
 function SignUpUsage() {
     const navigate = useNavigate();
-    const [isUserClicked, setIsUserClicked] = useState(false);
-    const [isExpertClicked, setIsExpertClicked] = useState(false);
-    const [isClicked, setIsClicked] = useState(false);
+    const [userType, setUserType] = useState();
 
     const handleClickDoneBtn = () => {
-        if (isClicked) {
-            navigate("/sign-up-1", { state: { userType: isUserClicked ? "user" : "expert" } });
+        if (userType) {
+            navigate("/sign-up-1", { state: { userType: userType } });
         }
     };
 
     const handleClickUserBtn = () => {
-        setIsUserClicked(true);
-        setIsExpertClicked(false);
-        setIsClicked(true);
+        setUserType("user");
     };
 
     const handleClickExpertBtn = () => {
-        setIsUserClicked(false);
-        setIsExpertClicked(true);
-        setIsClicked(true);
+        setUserType("expert");
     };
 
     return (
         <SignUpUsageWrapper>
             <BackHeader />
-
             <SignUpUsageContainer>
                 <SignUpTextWrapper>
                     <SignUpText>이 앱을 어떤 용도로 사용하시나요?</SignUpText>
                 </SignUpTextWrapper>
                 <UsageBtnWrapper>
-                    <UsageBtn $isClicked={isUserClicked} onClick={handleClickUserBtn}>
+                    <UsageBtn $userType={userType === "user"} onClick={handleClickUserBtn}>
                         사용자
                     </UsageBtn>
-                    <UsageBtn $isClicked={isExpertClicked} onClick={handleClickExpertBtn}>
+                    <UsageBtn $userType={userType === "expert"} onClick={handleClickExpertBtn}>
                         전문가
                     </UsageBtn>
                 </UsageBtnWrapper>
                 <SelectDoneBtnWrapper>
-                    <SelectDoneBtn onClick={handleClickDoneBtn} $isClicked={isClicked}>
+                    <SelectDoneBtn onClick={handleClickDoneBtn} $userType={userType}>
                         완료
                     </SelectDoneBtn>
                 </SelectDoneBtnWrapper>
@@ -96,7 +89,7 @@ const UsageBtn = styled.button`
     font-size: 1.6rem;
     font-weight: 500;
 
-    background-color: ${({ $isClicked }) => ($isClicked ? "rgb(201, 201, 201)" : "rgb(231, 231, 231)")};
+    background-color: ${({ $userType }) => ($userType ? "rgb(201, 201, 201)" : "rgb(231, 231, 231)")};
 
     color: rgb(4, 41, 63);
 `;
@@ -115,7 +108,7 @@ const SelectDoneBtn = styled.button`
     margin-top: 10rem;
 
     border-radius: 1rem;
-    background-color: ${({ $isClicked }) => ($isClicked ? "#4784ff" : "#cde9f4")};
+    background-color: ${({ $userType }) => ($userType ? "#4784ff" : "#cde9f4")};
     color: white;
 
     cursor: pointer;
