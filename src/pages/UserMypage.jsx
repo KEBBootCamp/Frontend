@@ -38,9 +38,9 @@ function UserMypage() {
                                 <MatchingExpert>동행 전문가 : 홍길동</MatchingExpert>
                                 <StyledIcPhoneCall onClick={handleClickPhoneCall} />
                             </MatchingExpertBox>
-                            <AcceptORRejectBtn $isAccepted={isAccepted}>
+                            <AcceptORRejectDiv $isAccepted={isAccepted}>
                                 {isAccepted ? "수락됨" : "거절됨"}
-                            </AcceptORRejectBtn>
+                            </AcceptORRejectDiv>
                         </MatchingExpertInfo>
                         <CarDetail>
                             <MatchingCarManufacturer>차종: 기아</MatchingCarManufacturer>
@@ -131,7 +131,6 @@ const MyInfoFixBox = styled.div`
 
     padding: 1rem;
     margin-top: 1.2rem;
-    /* border-bottom: 0.6rem solid rgb(231, 231, 231); */
 `;
 
 const MyInfoFix = styled.div`
@@ -191,9 +190,10 @@ const MatchingExpertBox = styled.div`
     align-items: center;
 `;
 
-const AcceptORRejectBtn = styled.button`
+const AcceptORRejectDiv = styled.div`
     width: 8rem;
 
+    text-align: center;
     padding: 0.75rem;
     font-size: 1.5rem;
 
