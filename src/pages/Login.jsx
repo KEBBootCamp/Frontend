@@ -119,7 +119,7 @@ const LoginBox = styled.input`
     height: 4.3rem;
     padding: 0 1rem;
 
-    border: 0.05rem solid #9e9e9e;
+    border: 1px solid #ccc;
     border-radius: 0.5rem;
 `;
 
