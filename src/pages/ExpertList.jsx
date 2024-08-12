@@ -1,70 +1,88 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/common/Header";
-import { IcUser } from "../assets/svg/icon";
-import { useNavigate } from "react-router-dom";
+import ListItem from "../components/ExpertList/ListItem";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function ExpertList() {
-    const navigate = useNavigate();
+    const expertData = [
+        {
+            id: 1,
+            userName: "김정환",
+            engineerCareer: "1년",
+            engineerBrand: "현대",
+            contact: "010-1111-1111",
+            expertIntro: "현대차 검수 전문가입니다.",
+        },
+        {
+            id: 2,
+            userName: "이장훈",
+            engineerCareer: "3년",
+            engineerBrand: "르노삼성",
+            contact: "010-2222-2222",
+            expertIntro: "르노삼성 검수에 자신 있습니다.",
+        },
+        {
+            id: 3,
+            userName: "박정완",
+            engineerCareer: "3년",
+            engineerBrand: "현대",
+            contact: "010-3333-3333",
+            expertIntro: "현대차 검수 천재이니 연락주세요.",
+        },
+        {
+            id: 4,
+            userName: "이경찬",
+            engineerCareer: "4년",
+            engineerBrand: "기아",
+            contact: "010-4444-4444",
+            expertIntro: "검수에 최선을 다하겠습니다.",
+        },
+        {
+            id: 5,
+            userName: "박수언",
+            engineerCareer: "7년",
+            engineerBrand: "르노삼성",
+            contact: "010-5555-5555",
+            expertIntro: "르노삼성 7년차 정비사입니다.",
+        },
+    ];
 
-    const handleClickExpertButton = () => {
-        navigate("/expert-detail");
-    };
+    const navigate = useNavigate();
+    const location = useLocation();
+    const manufacturer = location.state?.manufacturer; // 전달된 제조사 가져오기
+    //const userApplication = location.state.userApplication;
+
+    // 전달된 제조사에 맞는 전문가 필터링
+    const filteredExperts = expertData.filter((expert) => expert.engineerBrand === manufacturer);
+
+    if (!manufacturer) {
+        return (
+            <ExpertListWrapper>
+                <Header />
+                <NoExpertsMessage>제조사가 선택되지 않았습니다.</NoExpertsMessage>
+            </ExpertListWrapper>
+        );
+    }
 
     return (
         <ExpertListWrapper>
             <Header />
             <ExpertBodyWrapper>
-                <ExpertListBoxWrapper onClick={handleClickExpertButton}>
-                    <ExpertLeftBox>
-                        <StyledIcUser />
-                    </ExpertLeftBox>
-                    <ExpertRightBox>
-                        <ExpertRightBoxName>이름 : 홍길동</ExpertRightBoxName>
-                        <ExpertYear>경력 : 3년</ExpertYear>
-                        <ExpertMainCarFactory>주력 제조사 : 폭스바겐</ExpertMainCarFactory>
-                    </ExpertRightBox>
-                </ExpertListBoxWrapper>
-                <ExpertListBoxWrapper>
-                    <ExpertLeftBox>
-                        <StyledIcUser />
-                    </ExpertLeftBox>
-                    <ExpertRightBox>
-                        <ExpertRightBoxName>이름 : 뽀로로</ExpertRightBoxName>
-                        <ExpertYear>경력 : 1년</ExpertYear>
-                        <ExpertMainCarFactory>주력 제조사 : BMW</ExpertMainCarFactory>
-                    </ExpertRightBox>
-                </ExpertListBoxWrapper>
-                <ExpertListBoxWrapper>
-                    <ExpertLeftBox>
-                        <StyledIcUser />
-                    </ExpertLeftBox>
-                    <ExpertRightBox>
-                        <ExpertRightBoxName>이름 : 훌랄라</ExpertRightBoxName>
-                        <ExpertYear>경력 : 3년</ExpertYear>
-                        <ExpertMainCarFactory>주력 제조사 : 볼보</ExpertMainCarFactory>
-                    </ExpertRightBox>
-                </ExpertListBoxWrapper>
-                <ExpertListBoxWrapper onClick={handleClickExpertButton}>
-                    <ExpertLeftBox>
-                        <StyledIcUser />
-                    </ExpertLeftBox>
-                    <ExpertRightBox>
-                        <ExpertRightBoxName>이름 : 케로로</ExpertRightBoxName>
-                        <ExpertYear>경력 : 4년</ExpertYear>
-                        <ExpertMainCarFactory>주력 제조사 : 기아</ExpertMainCarFactory>
-                    </ExpertRightBox>
-                </ExpertListBoxWrapper>
-                <ExpertListBoxWrapper>
-                    <ExpertLeftBox>
-                        <StyledIcUser />
-                    </ExpertLeftBox>
-                    <ExpertRightBox>
-                        <ExpertRightBoxName>이름 : 꺄르르</ExpertRightBoxName>
-                        <ExpertYear>경력 : 7년</ExpertYear>
-                        <ExpertMainCarFactory>주력 제조사 : 르노삼성</ExpertMainCarFactory>
-                    </ExpertRightBox>
-                </ExpertListBoxWrapper>
+                {filteredExperts.length > 0 ? (
+                    filteredExperts.map((item) => (
+                        <ListItem
+                            key={item.id}
+                            userName={item.userName}
+                            engineerCareer={item.engineerCareer}
+                            engineerBrand={item.engineerBrand}
+                            contact={item.contact}
+                            expertIntro={item.expertIntro}
+                        />
+                    ))
+                ) : (
+                    <NoExpertsMessage>해당 제조사의 전문가가 없습니다.</NoExpertsMessage>
+                )}
             </ExpertBodyWrapper>
         </ExpertListWrapper>
     );
@@ -86,52 +104,10 @@ const ExpertBodyWrapper = styled.div`
     flex-direction: column;
     gap: 2rem;
 `;
+const NoExpertsMessage = styled.div`
+    font-size: 2rem;
+    text-align: center;
 
-const ExpertListBoxWrapper = styled.div`
-    width: 100%;
-
-    font-size: 1.5rem;
-    background-color: rgb(245, 245, 247);
-
-    display: flex;
-    align-items: center;
-
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-`;
-
-const ExpertLeftBox = styled.div`
-    width: 10rem;
-    height: 10rem;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
-const StyledIcUser = styled(IcUser)`
-    width: 6rem;
-    height: 6rem;
-`;
-const ExpertRightBox = styled.div`
-    width: calc(100% - 10rem);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-
-    background-color: rgb(245, 245, 247);
-`;
-
-const ExpertRightBoxName = styled.div`
-    width: 20rem;
-`;
-const ExpertMainCarFactory = styled.div`
-    width: 20rem;
-`;
-
-const ExpertYear = styled.div`
-    width: 20rem;
+    margin-top: 2rem;
+    color: #555;
 `;

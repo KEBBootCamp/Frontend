@@ -1,12 +1,25 @@
 import React from "react";
+import styled from "styled-components";
+import { IcUser } from "../../assets/svg/icon";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../libs/api";
 
-function ListItem({ User_id, User_name, engineer_career }) {
+function ListItem({ id, userName, engineerCareer, engineerBrand, contact, expertIntro }) {
     const navigate = useNavigate();
+    //const location = useLocation();
+    //const userApplication = location.state.userApplication;
 
     const handleClickListItem = () => {
-        navigate();
+        // api.get(
+        //     `/expert/expertDetails?brand=${manufacturer}&model=${model}&place=${inspectionSpace}&inspectDate=${formattedDate}`,
+        //     { withCredentials: true }
+        // );
+        // navigate(`/expert-detail/${id}`, { state: { userApplication: userApplication } });
+        navigate(`/expert-detail/${id}`, {
+            state: { id, userName, engineerCareer, engineerBrand, contact, expertIntro },
+        });
     };
+
     return (
         <React.Fragment>
             <ExpertListBoxWrapper onClick={handleClickListItem}>
@@ -14,9 +27,9 @@ function ListItem({ User_id, User_name, engineer_career }) {
                     <StyledIcUser />
                 </ExpertLeftBox>
                 <ExpertRightBox>
-                    <ExpertRightBoxName>이름 : 홍길동</ExpertRightBoxName>
-                    <ExpertYear>경력 : 3년</ExpertYear>
-                    <ExpertMainCarFactory>주력 제조사 : 폭스바겐</ExpertMainCarFactory>
+                    <ExpertRightBoxName>이름 : {userName}</ExpertRightBoxName>
+                    <ExpertYear>경력 : {engineerCareer}</ExpertYear>
+                    <ExpertMainCarFactory>주력 제조사 : {engineerBrand}</ExpertMainCarFactory>
                 </ExpertRightBox>
             </ExpertListBoxWrapper>
         </React.Fragment>
