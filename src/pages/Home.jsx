@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import Dropdown from "../components/common/Dropdown";
 import Calendar from "../components/common/Calendar";
+import { api } from "../libs/api";
 
 // 제조사 및 모델 데이터
 const models = {
@@ -20,24 +21,94 @@ function Home() {
 
     const [manufacturer, setManufacturer] = useState("");
     const [model, setModel] = useState("");
-    const [location, setLocation] = useState("");
+    const [inspectionSpace, setInspectionSpace] = useState("");
+    const [inspectionDate, setInspectionDate] = useState(new Date());
+
+    const [userApplication, setUserApplication] = useState({
+        manufacturer: "",
+        model: "",
+        inspectionSpace: "",
+        inspectionDate: new Date(),
+    });
 
     const handleManufacturerChange = (e) => {
-        const selectedManufacturer = e.target.value;
-        setManufacturer(selectedManufacturer);
+        setManufacturer(e.target.value);
         setModel(""); // 제조사 변경 시 모델 초기화
+        setUserApplication((prev) => ({
+            ...prev,
+            manufacturer: e.target.value,
+            model: "",
+        }));
     };
 
     const handleModelChange = (e) => {
         setModel(e.target.value);
+        setUserApplication((prev) => ({
+            ...prev,
+            model: e.target.value,
+        }));
     };
 
     const handleLocationChange = (e) => {
-        setLocation(e.target.value);
+        setInspectionSpace(e.target.value);
+        setUserApplication((prev) => ({
+            ...prev,
+            inspectionSpace: e.target.value,
+        }));
+    };
+
+    const handleDateChange = (date) => {
+        setInspectionDate(date); // 선택된 날짜를 상태로 저장
+        setUserApplication((prev) => ({
+            ...prev,
+            inspectionDate: date,
+        }));
+    };
+
+    // 필요한 부분만 추출하여 yyyy-MM-dd'T'HH:mm 형식으로 변환
+    const formatDateToISOString = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
     };
 
     const handleClickFindButton = () => {
-        navigate("/expert-list");
+        // api 연결 요청(GET 방식 - 쿼리 파라미터)
+
+        const formattedDate = formatDateToISOString(inspectionDate);
+
+        // userApplication 객체 내의 날짜를 포맷된 문자열로 업데이트
+        const updatedApplication = {
+            ...userApplication,
+            inspectionDate: formattedDate,
+        };
+
+        console.log(updatedApplication);
+
+        navigate("/expert-list", {
+            state: {
+                manufacturer,
+                model,
+                inspectionSpace,
+                inspectionDate: formattedDate,
+            },
+        });
+        api.get(
+            `/matching/inspectionInfo?brand=${manufacturer}&model=${model}&place=${inspectionSpace}&inspectDate=${formattedDate}`,
+            { withCredentials: true }
+        )
+            .then((res) => {
+                navigate("/expert-list", {
+                    state: updatedApplication,
+                });
+            })
+            .catch((err) => {
+                navigate("/error");
+            });
     };
 
     const handleClickLoginButton = () => {
@@ -74,8 +145,8 @@ function Home() {
                     <LeftBox>검수 장소</LeftBox>
                     <RightBox>
                         <Dropdown
-                            type="location"
-                            value={location}
+                            type="inspectionSpace"
+                            value={inspectionSpace}
                             onChange={handleLocationChange}
                             options={locations}
                         />
@@ -84,7 +155,7 @@ function Home() {
                 <SelectBoxWrapper>
                     <LeftBox>검수 일정</LeftBox>
                     <RightBox>
-                        <Calendar />
+                        <Calendar onDateChange={handleDateChange} />
                     </RightBox>
                 </SelectBoxWrapper>
             </SelectBodyWrapper>

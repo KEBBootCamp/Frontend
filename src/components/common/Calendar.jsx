@@ -4,27 +4,30 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import { IcCalendar } from "../../assets/svg/icon";
 import "./datepicker.custom.css";
 
-const Calendar = () => {
+const Calendar = ({ onDateChange }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        onDateChange(date); // 날짜 변경 시 부모 컴포넌트로 전달
+    };
 
     return (
         <DatePickerWrapper>
             <DatePickerContainer>
                 <DatePicker
-                    dateFormat="yyyy-MM-dd hh:mm" // 날짜 형태
+                    dateFormat="yyyy-MM-dd hh:mm"
                     value={selectedDate}
                     showTimeSelect
                     locale={ko}
                     selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
+                    onChange={handleDateChange}
                     minDate={new Date()} //현재 날짜 이전은 모두 선택 불가
                     shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
                     // className={styles.datePicker}
                 />
-                {/* <StyledCalendar /> */}
             </DatePickerContainer>
         </DatePickerWrapper>
     );
@@ -48,9 +51,4 @@ const DatePickerContainer = styled.div`
     padding: 0.5rem;
     background-color: white;
     border: 1px solid #ccc;
-`;
-
-const StyledCalendar = styled(IcCalendar)`
-    width: 2rem;
-    height: 2rem;
 `;
