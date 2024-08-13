@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IcUser, IcNext } from "../assets/svg/icon";
 import MypageHeader from "../components/common/MypageHeader";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
+import { api } from "../libs/api";
 
 function ExpertMypage() {
     const navigate = useNavigate();
+    const [expertData, setExpertData] = useState(null);
+    const [isloading, setIsLoading] = useState(true);
 
     const handleClickMyMatchingHistory = () => {
         navigate("/expert-my-matching-history");
@@ -13,6 +17,39 @@ function ExpertMypage() {
     const handleClickMyInfoFix = () => {
         navigate("/expert-my-info-fix");
     };
+
+    useEffect(() => {
+        api.get("/mypage/engineer")
+            .then(
+                (res) => {
+                    setExpertData(res.data.user);
+                    console.log("API Response Data:", res.data);
+                    setIsLoading(false);
+                },
+                { withCredentials: true }
+            )
+            .catch((err) => {
+                navigate("/error");
+                setIsLoading(false);
+            });
+    }, []);
+
+    const handleClickLogout = () => {
+        api.get("/users/logout")
+            .then((res) => {
+                // 로그아웃 성공 시 세션 스토리지에서 토큰 제거 및 로그인 페이지로 이동
+                sessionStorage.clear(); // sessionStorage 초기화
+                navigate("/login");
+            })
+            .catch((err) => {
+                console.error("로그아웃 실패:", err);
+            });
+    };
+
+    if (isloading) {
+        return <Loading />;
+    }
+
     return (
         <MypageWrapper>
             <MypageHeader title="마이페이지" />
@@ -22,10 +59,10 @@ function ExpertMypage() {
                         <StyledIcUser />
                     </MypageLeftBox>
                     <MypageRightBox>
-                        <MypageRightBoxName>홍길동</MypageRightBoxName>
+                        <MypageRightBoxName>{expertData?.userName || "전문가 이름"}</MypageRightBoxName>
                         <MypageRightBoxJob>
                             전문가
-                            <LogoutButton>로그아웃</LogoutButton>
+                            <LogoutButton onClick={handleClickLogout}>로그아웃</LogoutButton>
                         </MypageRightBoxJob>
                     </MypageRightBox>
                 </MypageBoxWrapper>
@@ -74,8 +111,6 @@ const MypageLeftBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    /* background-color: #bcbcbc; */
 `;
 
 const StyledIcUser = styled(IcUser)`
@@ -126,8 +161,6 @@ const MyInfoFixBox = styled.div`
     align-items: center;
 
     padding: 1.3rem;
-
-    //border-bottom: 0.6rem solid rgb(231, 231, 231);
 `;
 
 const MyMatchingBox = styled.div`

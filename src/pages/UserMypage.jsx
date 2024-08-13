@@ -1,15 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IcPhoneCall, IcUser } from "../assets/svg/icon";
 import MypageHeader from "../components/common/MypageHeader";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
+import { api } from "../libs/api";
 
 function UserMypage() {
     const navigate = useNavigate();
-    const [isAccepted, setIsAccepted] = useState(true);
+    const [userData, setUserData] = useState(null); // 사용자 데이터를 저장할 상태
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleClickPhoneCall = () => {
-        navigate("/expert-detail");
+    useEffect(() => {
+        api.get("/mypage/customer")
+            .then(
+                (res) => {
+                    setUserData(res.data);
+                    console.log("API Response Data:", res.data);
+                    setIsLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 설정
+                },
+                { withCredentials: true }
+            )
+            .catch((err) => {
+                console.log(err);
+                navigate("/error");
+                setIsLoading(false);
+            });
+    }, [navigate]);
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    const handleClickPhoneCall = (expertId) => {
+        navigate(`/expert-detail/${expertId}`);
+    };
+
+    const handleClickLogout = () => {
+        api.get("/users/logout")
+            .then((res) => {
+                sessionStorage.clear();
+                navigate("/login");
+            })
+            .catch((err) => {
+                console.error("로그아웃 실패:", err);
+            });
     };
 
     return (
@@ -21,10 +56,10 @@ function UserMypage() {
                         <StyledIcUser />
                     </MypageLeftBox>
                     <MypageRightBox>
-                        <MypageRightBoxName>뽀로로</MypageRightBoxName>
+                        <MypageRightBoxName>{userData?.expert?.userName || "사용자 이름"}</MypageRightBoxName>
                         <MypageRightBoxJob>
                             사용자
-                            <LogoutButton>로그아웃</LogoutButton>
+                            <LogoutButton onClick={handleClickLogout}>로그아웃</LogoutButton>
                         </MypageRightBoxJob>
                     </MypageRightBox>
                 </MypageBoxWrapper>
@@ -32,23 +67,31 @@ function UserMypage() {
                     <MyInfoFix>나의 신청 내역</MyInfoFix>
                 </MyInfoFixBox>
                 <MatchingHistoryList>
-                    <MatchingCarDetailWrapper>
-                        <MatchingExpertInfo>
-                            <MatchingExpertBox>
-                                <MatchingExpert>동행 전문가 : 홍길동</MatchingExpert>
-                                <StyledIcPhoneCall onClick={handleClickPhoneCall} />
-                            </MatchingExpertBox>
-                            <AcceptORRejectDiv $isAccepted={isAccepted}>
-                                {isAccepted ? "수락됨" : "거절됨"}
-                            </AcceptORRejectDiv>
-                        </MatchingExpertInfo>
-                        <CarDetail>
-                            <MatchingCarManufacturer>차종: 기아</MatchingCarManufacturer>
-                            <MatchingCarModel>스포티지</MatchingCarModel>
-                        </CarDetail>
-                        <MatchingCarLocation>검수 장소: 서울</MatchingCarLocation>
-                        <MatchingCarDate>검수 일정: 2024-08-05</MatchingCarDate>
-                    </MatchingCarDetailWrapper>
+                    {userData?.applications?.length > 0 ? (
+                        userData.applications.map((application) => (
+                            <MatchingCarDetailWrapper key={application.id}>
+                                <MatchingExpertInfo>
+                                    <MatchingExpertBox>
+                                        <MatchingExpert>동행 전문가 : {application.expertName}</MatchingExpert>
+                                        <StyledIcPhoneCall onClick={() => handleClickPhoneCall(application.expertId)} />
+                                    </MatchingExpertBox>
+                                    <AcceptORRejectDiv $isAccepted={application.isAccepted}>
+                                        {application.isAccepted ? "수락됨" : "거절됨"}
+                                    </AcceptORRejectDiv>
+                                </MatchingExpertInfo>
+                                <CarDetail>
+                                    <MatchingCarManufacturer>
+                                        차종: {application.carManufacturer}
+                                    </MatchingCarManufacturer>
+                                    <MatchingCarModel>{application.carModel}</MatchingCarModel>
+                                </CarDetail>
+                                <MatchingCarLocation>검수 장소: {application.location}</MatchingCarLocation>
+                                <MatchingCarDate>검수 일정: {application.inspectionDate}</MatchingCarDate>
+                            </MatchingCarDetailWrapper>
+                        ))
+                    ) : (
+                        <NoApplyMessage>신청 내역이 없습니다.</NoApplyMessage>
+                    )}
                 </MatchingHistoryList>
             </MypageBodyWrapper>
         </MypageWrapper>
@@ -211,4 +254,12 @@ const StyledIcPhoneCall = styled(IcPhoneCall)`
     height: 2rem;
 
     margin-left: 1rem;
+`;
+
+const NoApplyMessage = styled.div`
+    font-size: 2rem;
+    text-align: center;
+
+    margin-top: 2rem;
+    color: #555;
 `;
