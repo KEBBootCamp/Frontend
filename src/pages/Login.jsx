@@ -30,9 +30,14 @@ function Login() {
             console.log("User ID:", id);
             console.log("Password:", pwd);
 
-            api.post("/users/login", { userId: id, userPwd: pwd })
+            api.post("/users/login", { userId: id, userPwd: pwd }, { withCredentials: true })
                 .then((res) => {
-                    navigate("/");
+                    const userType = sessionStorage.getItem("userType"); // sessionStorage에서 userType 가져오기
+                    if (userType === "expert") {
+                        navigate("/expert-my-page");
+                    } else if (userType === "user") {
+                        navigate("/");
+                    }
                 })
                 .catch((err) => {
                     navigate("/login-please");

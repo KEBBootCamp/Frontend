@@ -9,6 +9,7 @@ function SignUpUsage() {
 
     const handleClickDoneBtn = () => {
         if (userType) {
+            sessionStorage.setItem("userType", userType); // sessionStorage에 userType 저장
             navigate("/sign-up-1", { state: { userType: userType } });
         }
     };
