@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Dropdown from "../components/common/Dropdown";
 import MypageHeader from "../components/common/MypageHeader";
 import { useNavigate } from "react-router-dom";
+import { api } from "../libs/api";
 
 const manufacturers = ["현대", "기아", "르노삼성"];
 // 1 ~ 30 (년)까지의 경력 선택 가능
@@ -13,6 +14,7 @@ function ExpertMyInfoFix() {
     const [mainManufacturer, setMainManufacturer] = useState("");
     const [experience, setExperience] = useState("");
     const [phoneNum, setPhoneNum] = useState("");
+    const [expertIntro, setExpertIntro] = useState("");
 
     const handleMainManufacturer = (e) => {
         setMainManufacturer(e.target.value);
@@ -22,8 +24,28 @@ function ExpertMyInfoFix() {
         setExperience(e.target.value);
     };
 
+    const handleIntroChange = (e) => {
+        setExpertIntro(e.target.value);
+    };
+
     const handleClickSaveBtn = () => {
-        navigate("/expert-my-page");
+        const fixInfo = {
+            engineerCareer: parseInt(experience), // 경력은 숫자로 전송
+            engineerBrand: mainManufacturer,
+            engineerProfile: expertIntro,
+            userPhonenumber: phoneNum,
+        };
+        api.put("/mypage/update", fixInfo)
+            .then(
+                (res) => {
+                    navigate("/expert-my-page");
+                },
+                { withCredentials: true }
+            )
+            .catch((err) => {
+                console.error("업데이트 실패:", err);
+                navigate("error");
+            });
     };
 
     // 전화번호 입력(number_ex. 01011112222) 시 010-1111-2222 로 포맷팅하는 로직
@@ -63,14 +85,18 @@ function ExpertMyInfoFix() {
                         <ExpertText>연락처</ExpertText>
                         <ExpertPhoneNum
                             type="text"
-                            placeholder="010-1234-5678"
+                            placeholder="010-0000-0000"
                             value={phoneNum}
                             onChange={handlePhoneNumChange}
                         />
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>한 줄 소개</ExpertText>
-                        <ExpertIntro placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!" />
+                        <ExpertIntro
+                            placeholder="현대차 검수에 특화된 전문가입니다. 연락 주세요!"
+                            value={expertIntro}
+                            onChange={handleIntroChange}
+                        />
                     </ExpertWrapper>
                 </ToggleExpertBox>
                 <ExpertMyinfoBox>
