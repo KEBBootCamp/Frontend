@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { IcUser, IcHome } from "../assets/svg/icon";
 import BackHeader from "../components/common/BackHeader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { api } from "../libs/api";
 
 function ExpertDetail() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { id, userName, expertIntro, engineerBrand, contact } = location.state;
+    const { manufacturer, model, inspectionSpace, inspectionDate } = location.state;
 
     const handleClickHomeBtn = () => {
         navigate("/");
@@ -14,7 +18,19 @@ function ExpertDetail() {
     const handleClickApplyBtn = () => {
         if (window.confirm("정말 신청하시겠습니까?")) {
             alert("신청이 완료되었습니다.");
-            navigate("/user-my-page");
+            api.post("/expert/createInspection", {
+                engineerId: id,
+                model: model,
+                brand: manufacturer,
+                place: inspectionSpace,
+                inspectDate: inspectionDate,
+            })
+                .then((res) => {
+                    navigate("/user-my-page");
+                })
+                .catch((err) => {
+                    navigate("/login-please");
+                });
         } else {
             alert("신청이 취소되었습니다.");
         }
@@ -36,13 +52,13 @@ function ExpertDetail() {
                 </ExpertTopBox>
                 <ExpertBottomBoxWrapper>
                     <ExpertBottomBox>
-                        <ExpertRightBoxName>홍길동</ExpertRightBoxName>
+                        <ExpertRightBoxName>{userName}</ExpertRightBoxName>
                         <ExpertRightBoxJob>정비사</ExpertRightBoxJob>
                     </ExpertBottomBox>
                     <ExpertDetailBox>
-                        <ExpertIntro>현장에서 모든 걸 보여드립니다!</ExpertIntro>
-                        <ExpertMainCarFactory>주요 제조사 : 폭스바겐</ExpertMainCarFactory>
-                        <ExpertPhoneNum>연락처 : 010-1111-1234</ExpertPhoneNum>
+                        <ExpertIntro>{expertIntro}</ExpertIntro>
+                        <ExpertMainCarFactory>주요 제조사 : {engineerBrand}</ExpertMainCarFactory>
+                        <ExpertPhoneNum>연락처 : {contact}</ExpertPhoneNum>
                     </ExpertDetailBox>
                 </ExpertBottomBoxWrapper>
             </ExpertDetailContainer>

@@ -32,7 +32,7 @@ function Router() {
                 <Route path="/sign-up-2" element={<SignUp2 />} />
                 <Route path="/sign-up-done" element={<SignUpDone />} />
                 <Route path="/loading" element={<Loading />} />
-                <Route path="/expert-detail" element={<ExpertDetail />} />
+                <Route path="/expert-detail/:id" element={<ExpertDetail />} />
                 <Route path="/expert-my-info-fix" element={<ExpertMyInfoFix />} />
                 <Route path="/expert-my-matching-history" element={<ExpertMyMatchingHistory />} />
                 <Route path="/login-please" element={<LoginPlease />} />
