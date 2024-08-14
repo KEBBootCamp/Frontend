@@ -11,7 +11,16 @@ function Header() {
     };
 
     const handleClickMypageButton = () => {
-        navigate("/user-my-page");
+        // 세션 저장소에서 userType 가져오기
+        const userType = sessionStorage.getItem("userType");
+
+        if (userType === "expert") {
+            navigate("/expert-my-page");
+        } else if (userType === "user") {
+            navigate("/user-my-page");
+        } else {
+            navigate("/login-please");
+        }
     };
 
     return (
