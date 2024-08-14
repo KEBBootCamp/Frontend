@@ -32,10 +32,13 @@ function Login() {
 
             api.post("/users/login", { userId: id, userPwd: pwd }, { withCredentials: true })
                 .then((res) => {
-                    const userType = sessionStorage.getItem("userType"); // sessionStorage에서 userType 가져오기
-                    if (userType === "expert") {
+                    const { isExpert } = res.data.user;
+                    // userType을 sessionStorage에 저장
+                    sessionStorage.setItem("userType", isExpert ? "expert" : "user");
+                    // 로그인 후 페이지 이동
+                    if (isExpert) {
                         navigate("/expert-my-page");
-                    } else if (userType === "user") {
+                    } else {
                         navigate("/");
                     }
                 })
