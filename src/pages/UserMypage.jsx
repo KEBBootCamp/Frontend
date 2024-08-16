@@ -13,14 +13,11 @@ function UserMypage() {
 
     useEffect(() => {
         api.get("/mypage/customer")
-            .then(
-                (res) => {
-                    setUserData(res.data);
-                    console.log("API Response Data:", res.data);
-                    setIsLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 설정
-                },
-                { withCredentials: true }
-            )
+            .then((res) => {
+                console.log("API Response Data:", res.data);
+                setUserData(res.data);
+                setIsLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 설정
+            })
             .catch((err) => {
                 console.log(err);
                 navigate("/error");
@@ -32,8 +29,26 @@ function UserMypage() {
         return <Loading />;
     }
 
-    const handleClickPhoneCall = (expertId) => {
-        navigate(`/expert-detail/${expertId}`);
+    const handleClickPhoneCall = (id) => {
+        const inspection = userData?.inspections.find((inspection) => inspection.id === id);
+        const expert = inspection?.expert || {};
+
+        navigate(`/expert-detail/${expert.userId}`, {
+            state: {
+                expert: {
+                    userPhonenumber: expert.userPhonenumber,
+                    engineerBrand: expert.engineerBrand,
+                    engineerProfile: expert.engineerProfile,
+                    userName: expert.userName,
+                },
+                inspection: {
+                    model: inspection.model,
+                    brand: inspection.brand,
+                    place: inspection.place,
+                    inspectDate: inspection.inspectDate,
+                },
+            },
+        });
     };
 
     const handleClickLogout = () => {
@@ -47,6 +62,26 @@ function UserMypage() {
             });
     };
 
+    // userName과 isExpert를 안전하게 접근하기 위해 옵셔널 체이닝 사용
+    const userName = userData?.user?.userName || "사용자 이름";
+    const userType = userData?.user?.isExpert ? "전문가" : "사용자";
+
+    // 날짜 포맷팅 함수
+    const formatDate = (dateString) => {
+        if (!dateString) return "날짜 정보 없음";
+        const date = new Date(dateString);
+
+        // 연도, 월, 일, 시, 분을 추출
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1 필요
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+
+        // 포맷팅된 문자열 반환
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
+
     return (
         <MypageWrapper>
             <MypageHeader title="마이페이지" />
@@ -56,9 +91,9 @@ function UserMypage() {
                         <StyledIcUser />
                     </MypageLeftBox>
                     <MypageRightBox>
-                        <MypageRightBoxName>{userData?.expert?.userName || "사용자 이름"}</MypageRightBoxName>
+                        <MypageRightBoxName>{userName}</MypageRightBoxName>
                         <MypageRightBoxJob>
-                            사용자
+                            {userType}
                             <LogoutButton onClick={handleClickLogout}>로그아웃</LogoutButton>
                         </MypageRightBoxJob>
                     </MypageRightBox>
@@ -67,26 +102,26 @@ function UserMypage() {
                     <MyInfoFix>나의 신청 내역</MyInfoFix>
                 </MyInfoFixBox>
                 <MatchingHistoryList>
-                    {userData?.applications?.length > 0 ? (
-                        userData.applications.map((application) => (
-                            <MatchingCarDetailWrapper key={application.id}>
+                    {userData?.inspections?.length > 0 ? (
+                        userData.inspections.map((inspection) => (
+                            <MatchingCarDetailWrapper key={inspection.id}>
                                 <MatchingExpertInfo>
                                     <MatchingExpertBox>
-                                        <MatchingExpert>동행 전문가 : {application.expertName}</MatchingExpert>
-                                        <StyledIcPhoneCall onClick={() => handleClickPhoneCall(application.expertId)} />
+                                        <MatchingExpert>
+                                            동행 전문가 : {inspection.expert?.userName || "정보 없음"}
+                                        </MatchingExpert>
+                                        <StyledIcPhoneCall onClick={() => handleClickPhoneCall(inspection.id)} />
                                     </MatchingExpertBox>
-                                    <AcceptORRejectDiv $isAccepted={application.isAccepted}>
-                                        {application.isAccepted ? "수락됨" : "거절됨"}
+                                    <AcceptORRejectDiv $isAccepted={inspection.isAccepted}>
+                                        {inspection.isAccepted ? "수락됨" : "거절됨"}
                                     </AcceptORRejectDiv>
                                 </MatchingExpertInfo>
                                 <CarDetail>
-                                    <MatchingCarManufacturer>
-                                        차종: {application.carManufacturer}
-                                    </MatchingCarManufacturer>
-                                    <MatchingCarModel>{application.carModel}</MatchingCarModel>
+                                    <MatchingCarManufacturer>차종 : {inspection.brand}</MatchingCarManufacturer>
+                                    <MatchingCarModel>{inspection.model}</MatchingCarModel>
                                 </CarDetail>
-                                <MatchingCarLocation>검수 장소: {application.location}</MatchingCarLocation>
-                                <MatchingCarDate>검수 일정: {application.inspectionDate}</MatchingCarDate>
+                                <MatchingCarLocation>검수 장소 : {inspection.place}</MatchingCarLocation>
+                                <MatchingCarDate>검수 일정 : {formatDate(inspection.inspectDate)}</MatchingCarDate>
                             </MatchingCarDetailWrapper>
                         ))
                     ) : (
@@ -194,6 +229,7 @@ const MatchingCarDetailWrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
 
+    margin-bottom: 1rem;
     padding: 1.5rem;
     border-radius: 1rem;
     background-color: ${({ $isRejected }) => ($isRejected ? "transparent" : "white")};
