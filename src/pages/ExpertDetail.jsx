@@ -8,8 +8,7 @@ import { api } from "../libs/api";
 function ExpertDetail() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { id, userName, expertIntro, engineerBrand, contact } = location.state;
-    const { manufacturer, model, inspectionSpace, inspectionDate } = location.state;
+    const { expert = {}, inspection = {} } = location.state || {};
 
     const handleClickHomeBtn = () => {
         navigate("/");
@@ -19,11 +18,11 @@ function ExpertDetail() {
         if (window.confirm("정말 신청하시겠습니까?")) {
             alert("신청이 완료되었습니다.");
             api.post("/expert/createInspection", {
-                engineerId: id,
-                model: model,
-                brand: manufacturer,
-                place: inspectionSpace,
-                inspectDate: inspectionDate,
+                engineerId: expert.userName,
+                model: inspection.model,
+                brand: inspection.brand,
+                place: inspection.place,
+                inspectDate: inspection.inspectDateTime,
             })
                 .then((res) => {
                     navigate("/user-my-page");
@@ -52,13 +51,13 @@ function ExpertDetail() {
                 </ExpertTopBox>
                 <ExpertBottomBoxWrapper>
                     <ExpertBottomBox>
-                        <ExpertRightBoxName>{userName}</ExpertRightBoxName>
+                        <ExpertRightBoxName>{expert.userName || "이름 없음"}</ExpertRightBoxName>
                         <ExpertRightBoxJob>정비사</ExpertRightBoxJob>
                     </ExpertBottomBox>
                     <ExpertDetailBox>
-                        <ExpertIntro>{expertIntro}</ExpertIntro>
-                        <ExpertMainCarFactory>주요 제조사 : {engineerBrand}</ExpertMainCarFactory>
-                        <ExpertPhoneNum>연락처 : {contact}</ExpertPhoneNum>
+                        <ExpertIntro>{expert.engineerProfile || "소개 없음"}</ExpertIntro>
+                        <ExpertMainCarFactory>주요 제조사 : {expert.engineerBrand || "정보 없음"}</ExpertMainCarFactory>
+                        <ExpertPhoneNum>연락처 : {expert.userPhonenumber || "정보 없음"}</ExpertPhoneNum>
                     </ExpertDetailBox>
                 </ExpertBottomBoxWrapper>
             </ExpertDetailContainer>
