@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Dropdown from "../components/common/Dropdown";
 import MypageHeader from "../components/common/MypageHeader";
@@ -16,6 +16,25 @@ function ExpertMyInfoFix() {
     const [phoneNum, setPhoneNum] = useState("");
     const [expertIntro, setExpertIntro] = useState("");
 
+    useEffect(() => {
+        api.get("/mypage/edit")
+            .then((res) => {
+                const userData = res.data.user || {}; // userData가 없으면 빈 객체를 사용
+                const expertData = userData.expert || {};
+
+                console.log("API Response Data:", res.data);
+
+                setMainManufacturer(expertData.engineerBrand || "");
+                setExperience(expertData.engineerCareer?.parseInt() || "");
+                setPhoneNum(userData.userPhonenumber || "");
+                setExpertIntro(expertData.engineerProfile || "");
+            })
+            .catch((err) => {
+                console.error("정보 불러오기 실패:", err);
+                navigate("/error");
+            });
+    }, [navigate]);
+
     const handleMainManufacturer = (e) => {
         setMainManufacturer(e.target.value);
     };
@@ -30,7 +49,7 @@ function ExpertMyInfoFix() {
 
     const handleClickSaveBtn = () => {
         const fixInfo = {
-            engineerCareer: parseInt(experience), // 경력은 숫자로 전송
+            engineerCareer: parseInt(experience),
             engineerBrand: mainManufacturer,
             engineerProfile: expertIntro,
             userPhonenumber: phoneNum,
