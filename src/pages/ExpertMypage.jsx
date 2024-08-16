@@ -20,14 +20,11 @@ function ExpertMypage() {
 
     useEffect(() => {
         api.get("/mypage/engineer")
-            .then(
-                (res) => {
-                    setExpertData(res.data.user);
-                    console.log("API Response Data:", res.data);
-                    setIsLoading(false);
-                },
-                { withCredentials: true }
-            )
+            .then((res) => {
+                setExpertData(res.data);
+                console.log("전문가 마이페이지:", res.data);
+                setIsLoading(false);
+            })
             .catch((err) => {
                 navigate("/error");
                 setIsLoading(false);
@@ -50,6 +47,10 @@ function ExpertMypage() {
         return <Loading />;
     }
 
+    // userName과 isExpert를 안전하게 접근하기 위해 옵셔널 체이닝 사용
+    const userName = expertData?.expert?.userName || "전문가 이름";
+    const userType = expertData?.expert?.isExpert ? "전문가" : "사용자";
+
     return (
         <MypageWrapper>
             <MypageHeader title="마이페이지" />
@@ -59,9 +60,9 @@ function ExpertMypage() {
                         <StyledIcUser />
                     </MypageLeftBox>
                     <MypageRightBox>
-                        <MypageRightBoxName>{expertData?.userName || "전문가 이름"}</MypageRightBoxName>
+                        <MypageRightBoxName>{userName}</MypageRightBoxName>
                         <MypageRightBoxJob>
-                            전문가
+                            {userType}
                             <LogoutButton onClick={handleClickLogout}>로그아웃</LogoutButton>
                         </MypageRightBoxJob>
                     </MypageRightBox>
