@@ -4,20 +4,29 @@ import { IcUser } from "../../assets/svg/icon";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../libs/api";
 
-function ListItem({ id, userName, engineerCareer, engineerBrand, contact, expertIntro }) {
+function ListItem({ id, userName, engineerCareer, engineerBrand }) {
     const navigate = useNavigate();
-    //const location = useLocation();
-    //const userApplication = location.state.userApplication;
 
     const handleClickListItem = () => {
-        // api.get(
-        //     `/expert/expertDetails?brand=${manufacturer}&model=${model}&place=${inspectionSpace}&inspectDate=${formattedDate}`,
-        //     { withCredentials: true }
-        // );
-        // navigate(`/expert-detail/${id}`, { state: { userApplication: userApplication } });
-        navigate(`/expert-detail/${id}`, {
-            state: { id, userName, engineerCareer, engineerBrand, contact, expertIntro },
-        });
+        const searchCriteria = JSON.parse(sessionStorage.getItem("searchCriteria") || "{}");
+        const { manufacturer, model, inspectionSpace, inspectionDate } = searchCriteria;
+
+        api.get(
+            `/expert/expertDetails?userId=${id}&brand=${manufacturer}&model=${model}&place=${inspectionSpace}&inspectDate=${inspectionDate}`
+        )
+            .then((res) => {
+                const { expert, inspection } = res.data;
+                // 전문가 상세 페이지로 이동하며 데이터를 전달
+                navigate(`/expert-detail/${id}`, {
+                    state: {
+                        expert: expert,
+                        inspection: inspection,
+                    },
+                });
+            })
+            .catch((err) => {
+                console.error("전문가 상세 정보 가져오기 실패:", err);
+            });
     };
 
     return (
