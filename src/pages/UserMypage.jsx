@@ -31,7 +31,7 @@ function UserMypage() {
 
     const handleClickPhoneCall = (id) => {
         const inspection = userData?.inspections.find((inspection) => inspection.id === id);
-        const expert = inspection?.expert || {};
+        const expert = inspection?.expert || null;
 
         navigate(`/expert-detail/${expert.userId}`, {
             state: {
@@ -68,7 +68,7 @@ function UserMypage() {
 
     // 날짜 포맷팅 함수
     const formatDate = (dateString) => {
-        if (!dateString) return "날짜 정보 없음";
+        if (!dateString || dateString === "null") return "날짜 정보 없음";
         const date = new Date(dateString);
 
         // 연도, 월, 일, 시, 분을 추출
