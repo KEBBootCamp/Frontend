@@ -12,7 +12,27 @@ function ExpertMypage() {
     const [isloading, setIsLoading] = useState(true);
 
     const handleClickMyMatchingHistory = () => {
-        navigate("/expert-my-matching-history");
+        api.get("/matching/list")
+            .then((res) => {
+                const inspections = res.data?.inspections || [];
+
+                inspections.forEach((inspection) => {
+                    console.log("검수 내역:", {
+                        브랜드: inspection.brand,
+                        모델: inspection.model,
+                        검수날짜: new Date(inspection.inspectDate).toLocaleString(),
+                        검수장소: inspection.place,
+                    });
+                });
+
+                navigate("/expert-my-matching-history", {
+                    state: { inspections },
+                });
+            })
+            .catch((err) => {
+                navigate("/error");
+                setIsLoading(false);
+            });
     };
     const handleClickMyInfoFix = () => {
         navigate("/expert-my-info-fix");
