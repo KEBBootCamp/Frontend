@@ -9,6 +9,8 @@ function ExpertMyMatchingHistory() {
     const inspections = location.state?.inspections || [];
 
     const [acceptedInspections, setAcceptedInspections] = useState({});
+    const [rejectedInspections, setRejectedInspections] = useState({});
+    const [completedInspections, setCompletedInspections] = useState({});
 
     const handleClickAcceptBtn = async (inspection) => {
         if (window.confirm("수락하시겠습니까?")) {
@@ -32,17 +34,49 @@ function ExpertMyMatchingHistory() {
         }
     };
 
-    const handleClickRejectBtn = (inspection) => {
+    const handleClickRejectBtn = async (inspection) => {
         if (window.confirm("거절하시겠습니까?")) {
-            console.log("거절된 검수 내역:", inspection);
-            alert(`Matching ID ${inspection.matchingId} 거절되었습니다.`);
+            const { matchingId } = inspection;
+            try {
+                const res = await api.post("/matching/reject", {
+                    matchingId,
+                });
+                if (res.data.status === "rejected") {
+                    setRejectedInspections((prev) => ({
+                        ...prev,
+                        [matchingId]: true,
+                    }));
+                    console.log("거절된 검수 내역:", inspection);
+                    alert(`Matching ID ${matchingId} 거절되었습니다.`);
+                } else {
+                    alert("검수 거절에 실패했습니다. 다시 시도해 주세요.");
+                }
+            } catch (err) {
+                console.error("검수 거절 요청 오류:", err);
+                alert("검수 거절에 실패했습니다. 다시 시도해 주세요.");
+            }
         }
     };
 
-    const handleClickCompleteBtn = (inspection) => {
+    const handleClickCompleteBtn = async (inspection) => {
         if (window.confirm("검수 완료하시겠습니까?")) {
-            console.log("검수 완료된 검수 내역:", inspection);
-            alert(`Matching ID ${inspection.matchingId} 검수 완료되었습니다.`);
+            const { matchingId } = inspection;
+            try {
+                const res = await api.post("/matching/complete", { matchingId });
+                if (res.data.status === "complete") {
+                    setCompletedInspections((prev) => ({
+                        ...prev,
+                        [matchingId]: true,
+                    }));
+                    console.log("검수 완료된 내역:", inspection);
+                    alert(`Matching ID ${matchingId} 검수 완료되었습니다.`);
+                } else {
+                    alert("검수 완료에 실패했습니다. 다시 시도해 주세요.");
+                }
+            } catch (err) {
+                console.error("검수 완료 요청 오류:", err);
+                alert("검수 완료에 실패했습니다. 다시 시도해 주세요.");
+            }
         }
     };
 
@@ -62,26 +96,36 @@ function ExpertMyMatchingHistory() {
         <ExpertMyMatchingHistoryWrapper>
             <MypageHeader title="매칭 내역" />
             <MatchingHistoryList>
-                {inspections.map((inspection) => (
-                    <UserCarDetailWrapper key={inspection.matchingId}>
-                        <UserDetail>
-                            <UserCarManufacturer>브랜드: {inspection.brand}</UserCarManufacturer>
-                            <UserCarModel>모델: {inspection.model}</UserCarModel>
-                        </UserDetail>
-                        <UserCarLocation>검수 장소: {inspection.place}</UserCarLocation>
-                        <UserCarDate>검수 일정: {formatDate(inspection.inspectDate)}</UserCarDate>
-                        <MatchingBtn>
-                            {acceptedInspections[inspection.matchingId] ? (
-                                <CompleteBtn onClick={() => handleClickCompleteBtn(inspection)}>검수 완료</CompleteBtn>
-                            ) : (
-                                <>
-                                    <AcceptBtn onClick={() => handleClickAcceptBtn(inspection)}>수락</AcceptBtn>
-                                    <RejectBtn onClick={() => handleClickRejectBtn(inspection)}>거절</RejectBtn>
-                                </>
-                            )}
-                        </MatchingBtn>
-                    </UserCarDetailWrapper>
-                ))}
+                {inspections.length > 0 ? (
+                    inspections.map((inspection) => (
+                        <UserCarDetailWrapper key={inspection.matchingId}>
+                            <UserDetail>
+                                <UserCarManufacturer>브랜드 : {inspection.brand}</UserCarManufacturer>
+                                <UserCarModel>모델 : {inspection.model}</UserCarModel>
+                            </UserDetail>
+                            <UserCarLocation>검수 장소 : {inspection.place}</UserCarLocation>
+                            <UserCarDate>검수 일정 : {formatDate(inspection.inspectDate)}</UserCarDate>
+                            <MatchingBtn>
+                                {completedInspections[inspection.matchingId] ? (
+                                    <CompletedMessage>검수 완료됨</CompletedMessage>
+                                ) : acceptedInspections[inspection.matchingId] ? (
+                                    <CompleteBtn onClick={() => handleClickCompleteBtn(inspection)}>
+                                        검수 완료
+                                    </CompleteBtn>
+                                ) : rejectedInspections[inspection.matchingId] ? (
+                                    <RejectedMessage>거절됨</RejectedMessage>
+                                ) : (
+                                    <>
+                                        <AcceptBtn onClick={() => handleClickAcceptBtn(inspection)}>수락</AcceptBtn>
+                                        <RejectBtn onClick={() => handleClickRejectBtn(inspection)}>거절</RejectBtn>
+                                    </>
+                                )}
+                            </MatchingBtn>
+                        </UserCarDetailWrapper>
+                    ))
+                ) : (
+                    <NoApplyMessage>신청 내역이 없습니다.</NoApplyMessage>
+                )}
             </MatchingHistoryList>
         </ExpertMyMatchingHistoryWrapper>
     );
@@ -111,6 +155,7 @@ const UserCarDetailWrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
 
+    margin-bottom: 1rem;
     padding: 1.5rem;
     border-radius: 1rem;
     background-color: white;
@@ -179,4 +224,12 @@ const CompleteBtn = styled.button`
     background-color: green;
     color: white;
     cursor: pointer;
+`;
+
+const NoApplyMessage = styled.div`
+    font-size: 2rem;
+    text-align: center;
+
+    margin-top: 2rem;
+    color: #555;
 `;
