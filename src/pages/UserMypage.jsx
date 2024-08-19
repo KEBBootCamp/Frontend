@@ -112,8 +112,16 @@ function UserMypage() {
                                         </MatchingExpert>
                                         <StyledIcPhoneCall onClick={() => handleClickPhoneCall(inspection.id)} />
                                     </MatchingExpertBox>
-                                    <AcceptORRejectDiv $isAccepted={inspection.isAccepted}>
-                                        {inspection.isAccepted ? "수락됨" : "거절됨"}
+                                    <AcceptORRejectDiv
+                                        $status={
+                                            inspection.isAccepted
+                                                ? "accepted"
+                                                : inspection.isRejected
+                                                ? "rejected"
+                                                : "pending"
+                                        }
+                                    >
+                                        {inspection.isAccepted ? "수락됨" : inspection.isRejected ? "거절됨" : "신청됨"}
                                     </AcceptORRejectDiv>
                                 </MatchingExpertInfo>
                                 <CarDetail>
@@ -277,10 +285,20 @@ const AcceptORRejectDiv = styled.div`
     font-size: 1.5rem;
 
     border-radius: 0.5rem;
-    background-color: ${({ $isAccepted }) => ($isAccepted ? "#4784ff" : "darkred")};
+    background-color: ${({ $status }) => {
+        switch ($status) {
+            case "accepted":
+                return "#4784ff"; // 수락됨 색상
+            case "rejected":
+                return "#ff4d4d"; // 거절됨 색상
+            default:
+                return "#aaa"; // 신청됨 색상
+        }
+    }};
     color: white;
     cursor: pointer;
 `;
+
 const MatchingExpert = styled.div`
     font-size: 1.8rem;
 `;
