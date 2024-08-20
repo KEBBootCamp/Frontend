@@ -54,7 +54,6 @@ function ExpertMypage() {
     const handleClickLogout = () => {
         api.get("/users/logout")
             .then((res) => {
-                // 로그아웃 성공 시 세션 스토리지에서 토큰 제거 및 로그인 페이지로 이동
                 sessionStorage.clear(); // sessionStorage 초기화
                 navigate("/login");
             })
@@ -67,7 +66,6 @@ function ExpertMypage() {
         return <Loading />;
     }
 
-    // userName과 isExpert를 안전하게 접근하기 위해 옵셔널 체이닝 사용
     const userName = expertData?.expert?.userName || "전문가 이름";
     const userType = expertData?.expert?.isExpert ? "전문가" : "사용자";
 

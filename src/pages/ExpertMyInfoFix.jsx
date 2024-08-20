@@ -15,17 +15,23 @@ function ExpertMyInfoFix() {
     const [experience, setExperience] = useState("");
     const [phoneNum, setPhoneNum] = useState("");
     const [expertIntro, setExpertIntro] = useState("");
+    const [errors, setErrors] = useState({
+        mainManufacturer: "",
+        experience: "",
+        phoneNum: "",
+        expertIntro: ""
+    });
 
     useEffect(() => {
         api.get("/mypage/edit")
             .then((res) => {
-                const userData = res.data.user || {}; // userData가 없으면 빈 객체를 사용
+                const userData = res.data.user || {};
                 const expertData = userData.expert || {};
 
                 console.log("API Response Data:", res.data);
 
                 setMainManufacturer(expertData.engineerBrand || "");
-                setExperience(expertData.engineerCareer?.parseInt() || "");
+                setExperience(expertData.engineerCareer || "");
                 setPhoneNum(userData.userPhonenumber || "");
                 setExpertIntro(expertData.engineerProfile || "");
             })
@@ -47,27 +53,6 @@ function ExpertMyInfoFix() {
         setExpertIntro(e.target.value);
     };
 
-    const handleClickSaveBtn = () => {
-        const fixInfo = {
-            engineerCareer: parseInt(experience),
-            engineerBrand: mainManufacturer,
-            engineerProfile: expertIntro,
-            userPhonenumber: phoneNum,
-        };
-        api.put("/mypage/update", fixInfo)
-            .then(
-                (res) => {
-                    navigate("/expert-my-page");
-                },
-                { withCredentials: true }
-            )
-            .catch((err) => {
-                console.error("업데이트 실패:", err);
-                navigate("error");
-            });
-    };
-
-    // 전화번호 입력(number_ex. 01011112222) 시 010-1111-2222 로 포맷팅하는 로직
     const formatPhoneNum = (value) => {
         if (!value) {
             return value;
@@ -86,6 +71,50 @@ function ExpertMyInfoFix() {
         setPhoneNum(formattedPhoneNum);
     };
 
+    const validateInputs = () => {
+        let isValid = true;
+        let errors = {};
+
+        if (!mainManufacturer) {
+            isValid = false;
+            errors.mainManufacturer = "주력 제조사를 입력해주세요.";
+        }
+        if (!experience) {
+            isValid = false;
+            errors.experience = "경력을 입력해주세요.";
+        }
+        if (!phoneNum) {
+            isValid = false;
+            errors.phoneNum = "연락처를 입력해주세요.";
+        }
+        if (!expertIntro) {
+            isValid = false;
+            errors.expertIntro = "한 줄 소개를 입력해주세요.";
+        }
+
+        setErrors(errors);
+        return isValid;
+    };
+
+    const handleClickSaveBtn = () => {
+        if (validateInputs()) {
+            const fixInfo = {
+                engineerCareer: parseInt(experience),
+                engineerBrand: mainManufacturer,
+                engineerProfile: expertIntro,
+                userPhonenumber: phoneNum,
+            };
+            api.put("/mypage/update", fixInfo, { withCredentials: true })
+                .then(() => {
+                    navigate("/expert-my-page");
+                })
+                .catch((err) => {
+                    console.error("업데이트 실패:", err);
+                    navigate("/error");
+                });
+        }
+    };
+
     return (
         <ExpertMyInfoFixWrapper>
             <MypageHeader title="내 정보 수정" />
@@ -95,10 +124,12 @@ function ExpertMyInfoFix() {
                         <ExpertText>경력</ExpertText>
                         <Dropdown value={experience} onChange={handleExperienceChange} options={years} width="8rem" />
                         <YearText>년</YearText>
+                        {errors.experience && <ErrorText>{errors.experience}</ErrorText>}
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>주력 제조사</ExpertText>
                         <Dropdown value={mainManufacturer} onChange={handleMainManufacturer} options={manufacturers} />
+                        {errors.mainManufacturer && <ErrorText>{errors.mainManufacturer}</ErrorText>}
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>연락처</ExpertText>
@@ -108,6 +139,7 @@ function ExpertMyInfoFix() {
                             value={phoneNum}
                             onChange={handlePhoneNumChange}
                         />
+                        {errors.phoneNum && <ErrorText>{errors.phoneNum}</ErrorText>}
                     </ExpertWrapper>
                     <ExpertWrapper>
                         <ExpertText>한 줄 소개</ExpertText>
@@ -116,6 +148,7 @@ function ExpertMyInfoFix() {
                             value={expertIntro}
                             onChange={handleIntroChange}
                         />
+                        {errors.expertIntro && <ErrorText>{errors.expertIntro}</ErrorText>}
                     </ExpertWrapper>
                 </ToggleExpertBox>
                 <ExpertMyinfoBox>
@@ -127,6 +160,7 @@ function ExpertMyInfoFix() {
 }
 
 export default ExpertMyInfoFix;
+
 
 const ExpertMyInfoFixWrapper = styled.div`
     width: 100vw;
@@ -209,4 +243,11 @@ const FixDoneButton = styled.button`
     margin-left: 25.5rem;
     background-color: rgb(4, 41, 63);
     color: white;
+`;
+
+const ErrorText = styled.span`
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: block;
 `;

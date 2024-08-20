@@ -4,7 +4,7 @@ import { IcUser } from "../../assets/svg/icon";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../libs/api";
 
-function ListItem({ id, userName, engineerCareer, engineerBrand }) {
+function ListItem({ id, userName, engineerCareer, engineerBrand, inspectionDate }) {
     const navigate = useNavigate();
 
     const handleClickListItem = () => {
@@ -21,6 +21,8 @@ function ListItem({ id, userName, engineerCareer, engineerBrand }) {
                     state: {
                         expert: expert,
                         inspection: inspection,
+                        engineerId: id,
+                        inspectionDate: inspectionDate
                     },
                 });
             })
