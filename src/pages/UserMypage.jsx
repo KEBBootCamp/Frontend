@@ -82,6 +82,21 @@ function UserMypage() {
         return `${year}-${month}-${day} ${hours}:${minutes}`;
     };
 
+    // 상태를 기반으로 표시할 메시지
+    const getStatusMessage = (inspection) => {
+        if (inspection.checked === null) {
+            return "신청됨";
+        } else if (inspection.checked === false) {
+            return "검수 거절";
+        } else if (inspection.checked === true && inspection.complete === false) {
+            return "검수중";
+        } else if (inspection.checked === true && inspection.complete === true) {
+            return "검수 완료";
+        } else {
+            return "정보 없음";
+        }
+    };
+
     return (
         <MypageWrapper>
             <MypageHeader title="마이페이지" />
@@ -113,15 +128,9 @@ function UserMypage() {
                                         <StyledIcPhoneCall onClick={() => handleClickPhoneCall(inspection.id)} />
                                     </MatchingExpertBox>
                                     <AcceptORRejectDiv
-                                        $status={
-                                            inspection.isAccepted
-                                                ? "accepted"
-                                                : inspection.isRejected
-                                                ? "rejected"
-                                                : "pending"
-                                        }
+                                        $isAccepted={inspection.checked !== null && inspection.checked !== false}
                                     >
-                                        {inspection.isAccepted ? "수락됨" : inspection.isRejected ? "거절됨" : "신청됨"}
+                                        {getStatusMessage(inspection)}
                                     </AcceptORRejectDiv>
                                 </MatchingExpertInfo>
                                 <CarDetail>
@@ -278,27 +287,17 @@ const MatchingExpertBox = styled.div`
 `;
 
 const AcceptORRejectDiv = styled.div`
-    width: 8rem;
+    width: 10rem;
 
     text-align: center;
     padding: 0.75rem;
     font-size: 1.5rem;
 
     border-radius: 0.5rem;
-    background-color: ${({ $status }) => {
-        switch ($status) {
-            case "accepted":
-                return "#4784ff"; // 수락됨 색상
-            case "rejected":
-                return "#ff4d4d"; // 거절됨 색상
-            default:
-                return "#aaa"; // 신청됨 색상
-        }
-    }};
+    background-color: ${({ $isAccepted }) => ($isAccepted ? "#4784ff" : "darkred")};
     color: white;
     cursor: pointer;
 `;
-
 const MatchingExpert = styled.div`
     font-size: 1.8rem;
 `;
