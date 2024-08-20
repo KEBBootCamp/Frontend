@@ -6,11 +6,9 @@ import { api } from "../libs/api";
 
 function ExpertMyMatchingHistory() {
     const location = useLocation();
-    const inspections = location.state?.inspections || [];
+    const initialInspections = location.state?.inspections || [];
 
-    const [acceptedInspections, setAcceptedInspections] = useState({});
-    const [rejectedInspections, setRejectedInspections] = useState({});
-    const [completedInspections, setCompletedInspections] = useState({});
+    const [inspections, setInspections] = useState(initialInspections);
 
     const handleClickAcceptBtn = async (inspection) => {
         if (window.confirm("수락하시겠습니까?")) {
@@ -18,11 +16,11 @@ function ExpertMyMatchingHistory() {
             try {
                 const res = await api.post("/matching/accept", { matchingId });
                 if (res.data.status === "accept") {
-                    setAcceptedInspections((prev) => ({
-                        ...prev,
-                        [matchingId]: true,
-                    }));
-                    console.log("수락된 검수 내역:", inspection);
+                    // 수락 후 상태 업데이트
+                    const updatedInspections = inspections.map((inspec) =>
+                        inspec.matchingId === matchingId ? { ...inspec, checked: true } : inspec
+                    );
+                    setInspections(updatedInspections);
                     alert(`Matching ID ${matchingId} 수락되었습니다.`);
                 } else {
                     alert("검수 수락에 실패했습니다. 다시 시도해 주세요.");
@@ -38,15 +36,11 @@ function ExpertMyMatchingHistory() {
         if (window.confirm("거절하시겠습니까?")) {
             const { matchingId } = inspection;
             try {
-                const res = await api.post("/matching/reject", {
-                    matchingId,
-                });
+                const res = await api.post("/matching/reject", { matchingId });
                 if (res.data.status === "rejected") {
-                    setRejectedInspections((prev) => ({
-                        ...prev,
-                        [matchingId]: true,
-                    }));
-                    console.log("거절된 검수 내역:", inspection);
+                    // 거절 후 상태 업데이트
+                    const updatedInspections = inspections.filter((inspec) => inspec.matchingId !== matchingId);
+                    setInspections(updatedInspections);
                     alert(`Matching ID ${matchingId} 거절되었습니다.`);
                 } else {
                     alert("검수 거절에 실패했습니다. 다시 시도해 주세요.");
@@ -64,11 +58,11 @@ function ExpertMyMatchingHistory() {
             try {
                 const res = await api.post("/matching/complete", { matchingId });
                 if (res.data.status === "complete") {
-                    setCompletedInspections((prev) => ({
-                        ...prev,
-                        [matchingId]: true,
-                    }));
-                    console.log("검수 완료된 내역:", inspection);
+                    // 완료 후 상태 업데이트
+                    const updatedInspections = inspections.map((inspec) =>
+                        inspec.matchingId === matchingId ? { ...inspec, complete: true } : inspec
+                    );
+                    setInspections(updatedInspections);
                     alert(`Matching ID ${matchingId} 검수 완료되었습니다.`);
                 } else {
                     alert("검수 완료에 실패했습니다. 다시 시도해 주세요.");
@@ -96,36 +90,26 @@ function ExpertMyMatchingHistory() {
         <ExpertMyMatchingHistoryWrapper>
             <MypageHeader title="매칭 내역" />
             <MatchingHistoryList>
-                {inspections.length > 0 ? (
-                    inspections.map((inspection) => (
-                        <UserCarDetailWrapper key={inspection.matchingId}>
-                            <UserDetail>
-                                <UserCarManufacturer>브랜드 : {inspection.brand}</UserCarManufacturer>
-                                <UserCarModel>모델 : {inspection.model}</UserCarModel>
-                            </UserDetail>
-                            <UserCarLocation>검수 장소 : {inspection.place}</UserCarLocation>
-                            <UserCarDate>검수 일정 : {formatDate(inspection.inspectDate)}</UserCarDate>
-                            <MatchingBtn>
-                                {completedInspections[inspection.matchingId] ? (
-                                    <CompletedMessage>검수 완료됨</CompletedMessage>
-                                ) : acceptedInspections[inspection.matchingId] ? (
-                                    <CompleteBtn onClick={() => handleClickCompleteBtn(inspection)}>
-                                        검수 완료
-                                    </CompleteBtn>
-                                ) : rejectedInspections[inspection.matchingId] ? (
-                                    <RejectedMessage>거절됨</RejectedMessage>
-                                ) : (
-                                    <>
-                                        <AcceptBtn onClick={() => handleClickAcceptBtn(inspection)}>수락</AcceptBtn>
-                                        <RejectBtn onClick={() => handleClickRejectBtn(inspection)}>거절</RejectBtn>
-                                    </>
-                                )}
-                            </MatchingBtn>
-                        </UserCarDetailWrapper>
-                    ))
-                ) : (
-                    <NoApplyMessage>신청 내역이 없습니다.</NoApplyMessage>
-                )}
+                {inspections.map((inspection) => (
+                    <UserCarDetailWrapper key={inspection.matchingId}>
+                        <UserDetail>
+                            <UserCarManufacturer>브랜드: {inspection.brand}</UserCarManufacturer>
+                            <UserCarModel>모델: {inspection.model}</UserCarModel>
+                        </UserDetail>
+                        <UserCarLocation>검수 장소: {inspection.place}</UserCarLocation>
+                        <UserCarDate>검수 일정: {formatDate(inspection.inspectDate)}</UserCarDate>
+                        <MatchingBtn>
+                            {inspection.checked === true && inspection.complete == false ? (
+                                <CompleteBtn onClick={() => handleClickCompleteBtn(inspection)}>검수 완료</CompleteBtn>
+                            ) : inspection.checked === null ? (
+                                <>
+                                    <AcceptBtn onClick={() => handleClickAcceptBtn(inspection)}>수락</AcceptBtn>
+                                    <RejectBtn onClick={() => handleClickRejectBtn(inspection)}>거절</RejectBtn>
+                                </>
+                            ) : null}
+                        </MatchingBtn>
+                    </UserCarDetailWrapper>
+                ))}
             </MatchingHistoryList>
         </ExpertMyMatchingHistoryWrapper>
     );
@@ -155,7 +139,6 @@ const UserCarDetailWrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
 
-    margin-bottom: 1rem;
     padding: 1.5rem;
     border-radius: 1rem;
     background-color: white;
@@ -224,12 +207,4 @@ const CompleteBtn = styled.button`
     background-color: green;
     color: white;
     cursor: pointer;
-`;
-
-const NoApplyMessage = styled.div`
-    font-size: 2rem;
-    text-align: center;
-
-    margin-top: 2rem;
-    color: #555;
 `;
