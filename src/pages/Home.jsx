@@ -57,6 +57,16 @@ function Home() {
 
         const formattedDate = formatDateToISOString(inspectionDate);
 
+        sessionStorage.setItem(
+            "searchCriteria",
+            JSON.stringify({
+                manufacturer,
+                model: model || "",
+                inspectionSpace,
+                inspectionDate: formattedDate,
+            })
+        );
+
         api.get(
             `/matching/inspectionInfo?brand=${manufacturer}&model=${model}&place=${inspectionSpace}&inspectDate=${formattedDate}`
         )

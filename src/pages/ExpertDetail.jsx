@@ -8,7 +8,9 @@ import { api } from "../libs/api";
 function ExpertDetail() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { expert = {}, inspection = {} } = location.state || {};
+    const { expert, inspection, engineerId } = location.state || {};
+    const searchCriteria = JSON.parse(sessionStorage.getItem("searchCriteria") || "{}");
+    const { inspectionDate } = searchCriteria;
 
     const handleClickHomeBtn = () => {
         navigate("/");
@@ -18,11 +20,11 @@ function ExpertDetail() {
         if (window.confirm("정말 신청하시겠습니까?")) {
             alert("신청이 완료되었습니다.");
             api.post("/expert/createInspection", {
-                engineerId: expert.userName,
+                engineerId: engineerId,
                 model: inspection.model,
                 brand: inspection.brand,
                 place: inspection.place,
-                inspectDate: inspection.inspectDateTime,
+                inspectDate: inspectionDate 
             })
                 .then((res) => {
                     navigate("/user-my-page");
