@@ -54,6 +54,7 @@ function ExpertMypage() {
     const handleClickLogout = () => {
         api.get("/users/logout")
             .then((res) => {
+                sessionStorage.clear(); // sessionStorage 초기화
                 navigate("/login");
             })
             .catch((err) => {

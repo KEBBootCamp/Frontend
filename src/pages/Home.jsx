@@ -56,6 +56,14 @@ function Home() {
         // api 연결 요청(GET 방식 - 쿼리 파라미터)
 
         const formattedDate = formatDateToISOString(inspectionDate);
+        
+        sessionStorage.setItem("searchCriteria", JSON.stringify({
+            manufacturer,
+            model: model || "", // 빈 문자열로 설정
+            inspectionSpace,
+            inspectionDate: formattedDate
+        }));
+        
 
         sessionStorage.setItem(
             "searchCriteria",
@@ -77,7 +85,7 @@ function Home() {
                         model,
                         inspectionSpace,
                         inspectionDate: formattedDate,
-                        experts: res.data.expertDto, // API로부터 받은 전문가 리스트
+                        experts: res.data.expertDto, 
                     },
                 });
             })
