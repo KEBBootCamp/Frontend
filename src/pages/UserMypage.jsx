@@ -16,7 +16,7 @@ function UserMypage() {
             .then((res) => {
                 console.log("API Response Data:", res.data);
                 setUserData(res.data);
-                setIsLoading(false); // 데이터 로딩이 완료되면 로딩 상태를 false로 설정
+                setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
@@ -276,18 +276,18 @@ const MatchingExpertInfo = styled.div`
     display: flex;
     align-items: center;
 
-    column-gap: 7rem;
+    column-gap: 5rem;
 `;
 
 const MatchingExpertBox = styled.div`
-    width: 25rem;
+    width: 35rem;
 
     display: flex;
     align-items: center;
 `;
 
 const AcceptORRejectDiv = styled.div`
-    width: 10rem;
+    width: 15rem;
 
     text-align: center;
     padding: 0.75rem;
