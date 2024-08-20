@@ -93,11 +93,11 @@ function ExpertMyMatchingHistory() {
                 {inspections.map((inspection) => (
                     <UserCarDetailWrapper key={inspection.matchingId}>
                         <UserDetail>
-                            <UserCarManufacturer>브랜드: {inspection.brand}</UserCarManufacturer>
-                            <UserCarModel>모델: {inspection.model}</UserCarModel>
+                            <UserCarManufacturer>브랜드 : {inspection.brand}</UserCarManufacturer>
+                            <UserCarModel>모델 : {inspection.model}</UserCarModel>
                         </UserDetail>
-                        <UserCarLocation>검수 장소: {inspection.place}</UserCarLocation>
-                        <UserCarDate>검수 일정: {formatDate(inspection.inspectDate)}</UserCarDate>
+                        <UserCarLocation>검수 장소 : {inspection.place}</UserCarLocation>
+                        <UserCarDate>검수 일정 : {formatDate(inspection.inspectDate)}</UserCarDate>
                         <MatchingBtn>
                             {inspection.checked === true && inspection.complete == false ? (
                                 <CompleteBtn onClick={() => handleClickCompleteBtn(inspection)}>검수 완료</CompleteBtn>
@@ -139,6 +139,7 @@ const UserCarDetailWrapper = styled.div`
     flex-direction: column;
     gap: 1rem;
 
+    margin-bottom: 1rem;
     padding: 1.5rem;
     border-radius: 1rem;
     background-color: white;
