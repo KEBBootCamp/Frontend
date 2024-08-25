@@ -142,9 +142,8 @@ const MypageRightBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
 
-    background-color: rgb(245, 245, 247);
+    gap: 1rem;
 `;
 
 const MypageRightBoxName = styled.div`
