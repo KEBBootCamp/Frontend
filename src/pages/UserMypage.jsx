@@ -128,7 +128,17 @@ function UserMypage() {
                                         <StyledIcPhoneCall onClick={() => handleClickPhoneCall(inspection.id)} />
                                     </MatchingExpertBox>
                                     <AcceptORRejectDiv
-                                        $isAccepted={inspection.checked !== null && inspection.checked !== false}
+                                        $status={
+                                            inspection.checked === null
+                                                ? "pending"
+                                                : inspection.checked === false
+                                                ? "rejected"
+                                                : inspection.checked === true && inspection.complete === false
+                                                ? "accepted"
+                                                : inspection.checked === true && inspection.complete === true
+                                                ? "completed"
+                                                : "unknown"
+                                        }
                                     >
                                         {getStatusMessage(inspection)}
                                     </AcceptORRejectDiv>
@@ -154,7 +164,7 @@ export default UserMypage;
 
 const MypageWrapper = styled.div`
     width: 100vw;
-    height: 100dvh;
+    min-height: 100vh;
 
     background-color: rgb(245, 245, 247);
 `;
@@ -189,9 +199,9 @@ const MypageRightBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
 
-    background-color: rgb(245, 245, 247);
+    margin-left: 2rem;
+    gap: 1rem;
 `;
 
 const MypageRightBoxName = styled.div`
@@ -294,7 +304,18 @@ const AcceptORRejectDiv = styled.div`
     font-size: 1.5rem;
 
     border-radius: 0.5rem;
-    background-color: ${({ $isAccepted }) => ($isAccepted ? "#4784ff" : "darkred")};
+    background-color: ${({ $status }) => {
+        switch ($status) {
+            case "accepted":
+                return "#4784ff"; // 수락됨 색상
+            case "rejected":
+                return "darkred"; // 거절됨 색상
+            case "completed":
+                return "#aaa"; // 검수 완료 색상
+            default:
+                return "#aaa"; // 신청됨 색상
+        }
+    }};
     color: white;
     cursor: pointer;
 `;
